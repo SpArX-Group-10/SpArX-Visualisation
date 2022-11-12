@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import './App.css';
 import logo from './logo.svg';
+import Flow from "./Visualisation";
 
 function Home() {
   return (
@@ -28,6 +29,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
+        <Route exact path="/visualisation" element={<Flow/>}/>
       </Routes>
     </BrowserRouter>
   );
