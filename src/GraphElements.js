@@ -1,4 +1,4 @@
-import {Position } from 'reactflow';
+import { Position } from 'reactflow';
 export const nodes = [
     // Input layer
     {
@@ -150,24 +150,24 @@ export const nodes = [
   ];
 
 export const edges = [
-  { id: '1-4', source: '1', target: '4', label: 'to the', type: 'straight', hidden: true, layer: 1 },
-  { id: '1-5', source: '1', target: '5', label: 'to the', type: 'straight', hidden: true, layer: 1 },
-  { id: '1-6', source: '1', target: '6', label: 'to the', type: 'straight', hidden: true, layer: 1 },
-  { id: '5-7', source: '5', target: '8', label: 'to the', type: 'straight', hidden: true, layer: 1 },
+  { id: '1-4', source: '1', target: '4', type: 'straight', hidden: true, layer: 1, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '1-5', source: '1', target: '5', type: 'straight', hidden: true, layer: 1, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '1-6', source: '1', target: '6', type: 'straight', hidden: true, layer: 1, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '5-7', source: '5', target: '8', type: 'straight', hidden: true, layer: 1, markerEnd: {type: 'arrow', width: 20, height: 20}, },
 
-  { id: '8-12', source: '8', target: '12', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '9-12', source: '9', target: '12', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '10-12', source: '10', target: '12', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '11-12', source: '11', target: '12', label: 'to the', type: 'straight', hidden: true, layer: 3 },
+  { id: '8-12', source: '8', target: '12', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '9-12', source: '9', target: '12', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '10-12', source: '10', target: '12', type: 'straight', hidden: true, layer: 3, markerStart: {type: 'arrow', width: 20, height: 20}, },
+  { id: '11-12', source: '11', target: '12', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
 
-  { id: '8-13', source: '8', target: '13', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '9-13', source: '9', target: '13', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '10-13', source: '10', target: '13', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '11-13', source: '11', target: '13', label: 'to the', type: 'straight', hidden: true, layer: 3 },
+  { id: '8-13', source: '8', target: '13', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '9-13', source: '9', target: '13', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '10-13', source: '10', target: '13', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '11-13', source: '11', target: '13', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
 
-  { id: '8-14', source: '8', target: '14', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '9-14', source: '9', target: '14', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '10-14', source: '10', target: '14', label: 'to the', type: 'straight', hidden: true, layer: 3 },
-  { id: '11-14', source: '11', target: '14', label: 'to the', type: 'straight', hidden: true, layer: 3 },
+  { id: '8-14', source: '8', target: '14', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '9-14', source: '9', target: '14', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '10-14', source: '10', target: '14', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
+  { id: '11-14', source: '11', target: '14', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
 ];
 
