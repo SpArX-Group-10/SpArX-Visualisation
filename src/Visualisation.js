@@ -32,7 +32,7 @@ const getInitialEdgesHoverData = (eds) => {
   return hoverStateCards;
 };
 
-const zoomSelector = (s) => s.transform[2];
+const zoomSelector = (s) => s.transform;
 function Flow({
   nodes,
   edges,
@@ -41,11 +41,13 @@ function Flow({
   handleNodeLeave,
   handleMoveEnd,
   setZoom,
+  setViewportPosition,
 }) {
-  const internal_zoom = useStore(zoomSelector);
+  const internal_viewport = useStore(zoomSelector);
   useEffect(() => {
-    setZoom(internal_zoom);
-  }, [internal_zoom]);
+    setZoom(internal_viewport[2]);
+    setViewportPosition({ X: internal_viewport[0], Y: internal_viewport[1] });
+  }, [internal_viewport, setZoom, setViewportPosition]);
   return (
     <ReactFlow
       nodes={nodes}
@@ -107,11 +109,6 @@ function FlowWithProvider() {
     setHoveredNode(null);
   };
 
-  const handleMoveEnd = (event, viewport) => {
-    setViewportPosition({ X: viewport.x, Y: viewport.y });
-    setZoom(viewport.zoom);
-  };
-
   return (
     <div style={{ height: "100vh" }}>
       {isHovered ? (
@@ -129,8 +126,8 @@ function FlowWithProvider() {
           renderPreviousLayer={renderPreviousLayer}
           handleNodeEnter={handleNodeEnter}
           handleNodeLeave={handleNodeLeave}
-          handleMoveEnd={handleMoveEnd}
           setZoom={setZoom}
+          setViewportPosition={setViewportPosition}
         />
       </ReactFlowProvider>
     </div>
