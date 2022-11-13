@@ -1,12 +1,12 @@
-import { Position } from 'reactflow';
-export const nodes = [
+import { getIncomers, Position } from 'reactflow';
+const initialNodes = [
     // Input layer
     {
       id: '1',
       className: 'circle',
       data: { label: 'X1' },
       position: { x: 0, y: 50 },
-      type: 'input',
+      type: 'defaultNode',
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
       layer: 1,
@@ -17,7 +17,7 @@ export const nodes = [
       data: { label: 'X2' },
       className: 'circle',
       position: { x: 0, y: 150 },
-      type: 'input',
+      type: 'defaultNode',
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
       layer: 1,
@@ -28,7 +28,7 @@ export const nodes = [
       data: { label: 'X3' },
       className: 'circle',
       position: { x: 0, y: 250 },
-      type: 'input',
+      type: 'defaultNode',
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
       layer: 1,
@@ -37,6 +37,7 @@ export const nodes = [
     // Hidden Layer 1
     {
       id: '4',
+      type: 'defaultNode',
       data: { label: 'C1' },
       className: 'circle',
       position: { x: 200, y: 0 },
@@ -47,6 +48,7 @@ export const nodes = [
     },
     {
       id: '5',
+      type: 'defaultNode',
       data: { label: 'C2' },
       className: 'circle',
       position: { x: 200, y: 100 },
@@ -57,6 +59,7 @@ export const nodes = [
     },
     {
       id: '6',
+      type: 'defaultNode',
       data: { label: 'C3' },
       className: 'circle',
       position: { x: 200, y: 200 },
@@ -67,6 +70,7 @@ export const nodes = [
     },
     {
       id: '7',
+      type: 'defaultNode',
       data: { label: 'C4' },
       className: 'circle',
       position: { x: 200, y: 300 },
@@ -78,6 +82,7 @@ export const nodes = [
     // Hidden Layer 2
     {
       id: '8',
+      type: 'defaultNode',
       data: { label: 'C5' },
       className: 'circle',
       position: { x: 400, y: 0 },
@@ -88,6 +93,7 @@ export const nodes = [
     },
     {
       id: '9',
+      type: 'defaultNode',
       data: { label: 'C6' },
       className: 'circle',
       position: { x: 400, y: 100 },
@@ -98,6 +104,7 @@ export const nodes = [
     },
     {
       id: '10',
+      type: 'defaultNode',
       className: 'circle',
       data: { label: 'C7' },
       position: { x: 400, y: 200 },
@@ -108,6 +115,7 @@ export const nodes = [
     },
     {
       id: '11',
+      type: 'defaultNode',
       className: 'circle',
       data: { label: 'C8' },
       position: { x: 400, y: 300 },
@@ -122,7 +130,7 @@ export const nodes = [
       className: 'circle',
       data: { label: 'O1' },
       position: { x: 600, y: 50 },
-      type: 'output',
+      type: 'defaultNode',
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
       layer: 4
@@ -132,7 +140,7 @@ export const nodes = [
       className: 'circle',
       data: { label: 'O2' },
       position: { x: 600, y: 150 },
-      type: 'output',
+      type: 'defaultNode',
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
       layer: 4
@@ -142,14 +150,14 @@ export const nodes = [
       className: 'circle',
       data: { label: 'O3' },
       position: { x: 600, y: 250 },
-      type: 'output',
+      type: 'defaultNode',
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
       layer: 4
     },
   ];
 
-export const edges = [
+const initialEdges = [
   { id: '1-4', source: '1', target: '4', type: 'straight', hidden: true, layer: 1, markerEnd: {type: 'arrow', width: 20, height: 20}, },
   { id: '1-5', source: '1', target: '5', type: 'straight', hidden: true, layer: 1, markerEnd: {type: 'arrow', width: 20, height: 20}, },
   { id: '1-6', source: '1', target: '6', type: 'straight', hidden: true, layer: 1, markerEnd: {type: 'arrow', width: 20, height: 20}, },
@@ -171,3 +179,27 @@ export const edges = [
   { id: '11-14', source: '11', target: '14', type: 'straight', hidden: true, layer: 3, markerEnd: {type: 'arrow', width: 20, height: 20}, },
 ];
 
+const getInitialNodesHoverData = (nds, eds) => {
+  var hoverStateCards = {};
+  nds.forEach((nd) => {
+    hoverStateCards[nd.data.label] = {
+      argument: nd.data.label,
+      incomingNodes: getIncomers(nd, nds, eds),
+    };
+  });
+
+  return hoverStateCards;
+};
+
+var initialNodesHoverData = getInitialNodesHoverData(
+  initialNodes,
+  initialEdges
+);
+
+export const nodes = initialNodes.map((nd) => {
+  nd.data.argument = initialNodesHoverData[nd.data.label].argument
+  nd.data.incomingNodes = initialNodesHoverData[nd.data.label].incomingNodes
+  return nd
+})
+
+export const edges = initialEdges
