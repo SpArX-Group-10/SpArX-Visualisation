@@ -14,8 +14,8 @@ import { NodeHoverCard, EdgeHoverCard } from "./HoverCards";
 const getInitialNodesHoverData = (nds, eds) => {
   var hoverStateCards = {};
   nds.forEach((nd) => {
-    hoverStateCards[nd.label] = {
-      argument: nd.label,
+    hoverStateCards[nd.data.label] = {
+      argument: nd.data.label,
       incomingNodes: getIncomers(nd, nds, eds),
     };
   });
@@ -68,6 +68,7 @@ function FlowWithProvider() {
     initialNodes,
     initialEdges
   );
+  console.log(initialNodesHoverData);
   var initialEdgesHoverData = getInitialEdgesHoverData(initialEdges);
 
   const [nodes, setNodes] = useState(initialNodes);
@@ -113,7 +114,8 @@ function FlowWithProvider() {
     <div style={{ height: "100vh" }}>
       {isHovered ? (
         <NodeHoverCard
-          data={initialNodesHoverData[hoveredNode.label]}
+          argument={initialNodesHoverData[hoveredNode.data.label].argument}
+          incomingNodes={initialNodesHoverData[hoveredNode.data.label].incomingNodes}
           viewportPosition={viewportPosition}
           hoverPosition={hoverPosition}
           zoom={zoom}

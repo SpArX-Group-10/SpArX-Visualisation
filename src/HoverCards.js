@@ -11,12 +11,15 @@ export const NodeHoverCard = ({
   hoverPosition,
   zoom,
 }) => {
+  var incoming = "[" + incomingNodes.map(nd => nd.data.label).join(',') + "]";
+
   return (
     <div
       style={{
-        width: div_width * zoom,
+        width: div_width * zoom * 4,
         height: div_height * zoom,
-        backgroundColor: "red",
+        backgroundColor: "#F3F1F1",
+        border: '2px solid black',
         top: (node_height - div_height / 2) * zoom,
         left: (node_width * 2 + right_offset) * zoom,
         position: "absolute",
@@ -26,14 +29,11 @@ export const NodeHoverCard = ({
         }px, ${viewportPosition.Y + zoom * hoverPosition.Y}px)`,
       }}
     >
-      <div style={{ width: 25, height: 25 }} className="argument">
-        {" "}
-        {argument}{" "}
-      </div>
-      <div style={{ width: 25, height: 25 }} className="incomingNodes">
-        {" "}
-        {incomingNodes}{" "}
-      </div>
+        <text style={{ width: div_width * zoom * 4, height: div_height * zoom, fontSize: '1.2vmin', color: 'black' }}> 
+          Node argument: {argument} 
+          <br/> 
+          Directly supported/attacked by: {incoming} 
+        </text>
     </div>
   );
 };
