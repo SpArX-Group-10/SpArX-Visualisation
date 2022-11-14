@@ -1,7 +1,7 @@
 import ReactFlow, { Controls, Background, getIncomers } from "reactflow";
 import { useEffect, useMemo, useState } from "react";
 import "reactflow/dist/style.css";
-import { nodes as processedNodes, edges as processedEdges } from "./GraphElements";
+import { jsonToGraph } from "./GraphElements";
 import "./GraphElementsStyle.css";
 import GraphNode from "./Node";
 import React from "react";
@@ -16,27 +16,32 @@ const getInitialEdgesHoverData = (eds) => {
 };
 
 export default function Flow() {
-  var initialEdgesHoverData = getInitialEdgesHoverData(processedEdges);
+  //var initialEdgesHoverData = getInitialEdgesHoverData(processedEdges);
 
-  const [nodes, setNodes] = useState(processedNodes);
-  const [edges, setEdges] = useState(processedEdges);
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
 
   const [graphJson, setGraphJson] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/graph', {
-      methods:'GET',
-      headers : {
-        'Content-Type':'application/json',
+    fetch("http://127.0.0.1:5000/graph", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
     })
-    .then(response => response.text())
-    .then(response => {
-      setGraphJson(JSON.parse(response));
-      console.log(JSON.parse(response));
-    })
-    .catch(error => console.log(error));
+      .then((response) => response.text())
+      .then((response) => {
+        setGraphJson(JSON.parse(response));
+      })
+      .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    const [nodes, edges] = jsonToGraph(graphJson);
+    setNodes(nodes);
+    setEdges(edges);
+  }, [graphJson]);
 
   const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
 
