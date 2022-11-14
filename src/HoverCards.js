@@ -1,5 +1,10 @@
-import React from "react";
-export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attackingNodes }) => {
+import React, { useEffect } from "react";
+export const NodeHoverCard = ({
+  argument,
+  incomingNodes,
+  supportingNodes,
+  attackingNodes,
+}) => {
   // var incoming = "[" + incomingNodes.map((nd) => nd.data.label).join(",") + "]";
   var supporting_nodes = "[" + supportingNodes.join(",") + "]";
   var attacking_nodes = "[" + attackingNodes.join(",") + "]";
@@ -16,6 +21,9 @@ export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attack
 };
 
 export const EdgeHoverCard = ({ weight, edgeType }) => {
+  useEffect(() => {
+    console.log("useEffect");
+  });
   return (
     <div>
       Weight: {weight}

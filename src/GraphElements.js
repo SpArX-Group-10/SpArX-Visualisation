@@ -62,18 +62,13 @@ export const jsonToGraph = (myData) => {
     });
   });
 
-  var nodesHoverData = getNodesHoverData(
-    processedNodes,
-    processedEdges
-  );
+  var nodesHoverData = getNodesHoverData(processedNodes, processedEdges);
 
   const nodes = processedNodes.map((nd) => {
     nd.data.argument = nodesHoverData[nd.data.label].argument;
     nd.data.incomingNodes = nodesHoverData[nd.data.label].incomingNodes;
-    nd.data.supportingNodes =
-      nodesHoverData[nd.data.label].supportingNodes;
-    nd.data.attackingNodes =
-      nodesHoverData[nd.data.label].attackingNodes;
+    nd.data.supportingNodes = nodesHoverData[nd.data.label].supportingNodes;
+    nd.data.attackingNodes = nodesHoverData[nd.data.label].attackingNodes;
     return nd;
   });
 

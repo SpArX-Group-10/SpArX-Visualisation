@@ -7,9 +7,7 @@ import GraphEdge from "./Edge";
 import GraphNode from "./Node";
 import React from "react";
 
-
 export default function Flow() {
-
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
 
@@ -36,7 +34,7 @@ export default function Flow() {
   }, [graphJson]);
 
   const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
-  const edgeTypes = useMemo(() => ({ defaultEdge: GraphEdge }), [])
+  const edgeTypes = useMemo(() => ({ defaultEdge: GraphEdge }), []);
 
   const renderPreviousLayer = (_, curNode) => {
     setNodes((nds) =>
@@ -67,7 +65,7 @@ export default function Flow() {
 
     setEdges((eds) =>
       eds.map((edge) => {
-        if(edge===curEdge) {
+        if (edge === curEdge) {
           if (curEdge.showing_label) {
             curEdge.label = "";
             curEdge.showing_label = false;
