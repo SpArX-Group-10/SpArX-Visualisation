@@ -1,11 +1,6 @@
 import React from "react";
-const div_width = 50;
-const div_height = 50;
-const node_height = 30;
-const node_width = 30;
-const right_offset = 10;
 export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attackingNodes }) => {
-  var incoming = "[" + incomingNodes.map((nd) => nd.data.label).join(",") + "]";
+  // var incoming = "[" + incomingNodes.map((nd) => nd.data.label).join(",") + "]";
   var supporting_nodes = "[" + supportingNodes.join(",") + "]";
   var attacking_nodes = "[" + attackingNodes.join(",") + "]";
 
@@ -20,27 +15,12 @@ export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attack
   );
 };
 
-export const EdgeHoverCard = ({ weight, edgeType, position }) => {
+export const EdgeHoverCard = ({ weight, edgeType }) => {
   return (
-    <div
-      style={{
-        width: 50,
-        height: 50,
-        backgroundColor: "blue",
-        top: position.Y,
-        left: position.X,
-        position: "absolute",
-        zIndex: 100,
-      }}
-    >
-      <div style={{ width: 25, height: 25 }} className="weight">
-        {" "}
-        {weight}{" "}
-      </div>
-      <div style={{ width: 25, height: 25 }} className="edgeType">
-        {" "}
-        {edgeType}{" "}
-      </div>
+    <div>
+      Weight: {weight}
+      <br />
+      Edge type: {edgeType}
     </div>
   );
 };
