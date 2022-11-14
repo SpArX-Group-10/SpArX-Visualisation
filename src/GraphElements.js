@@ -189,7 +189,7 @@ myNodes.forEach((node) => {
     id: String(node.id),
     className: 'circle',
     data: { label: node.label },
-    position: { x: node.position.x*2, y: node.position.y*2},
+    position: { x: node.position.x*3, y: node.position.y*2},
     type: 'defaultNode',
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
@@ -218,6 +218,8 @@ const getInitialNodesHoverData = (nds, eds) => {
   nds.forEach((nd) => {
     hoverStateCards[nd.data.label] = {
       argument: nd.data.label,
+      supportingNodes: nd.supportingNodes,
+      attackingNodes: nd.attackingNodes,
       incomingNodes: getIncomers(nd, nds, eds),
     };
   });
@@ -233,6 +235,8 @@ var initialNodesHoverData = getInitialNodesHoverData(
 export const nodes = processedNodes.map((nd) => {
   nd.data.argument = initialNodesHoverData[nd.data.label].argument
   nd.data.incomingNodes = initialNodesHoverData[nd.data.label].incomingNodes
+  nd.data.supportingNodes = initialNodesHoverData[nd.data.label].supportingNodes
+  nd.data.attackingNodes = initialNodesHoverData[nd.data.label].attackingNodes
   return nd
 })
 
