@@ -20,10 +20,11 @@ export const NodeHoverCard = ({
   );
 };
 
-export const EdgeHoverCard = ({ weight, edgeType }) => {
+export const EdgeHoverCard = ({ weight, edgeType, setIsHovered }) => {
   useEffect(() => {
-    console.log("useEffect");
-  });
+    setIsHovered(true)
+    return (() => { setIsHovered(false) })
+  }, [setIsHovered]);
   return (
     <div>
       Weight: {weight}
