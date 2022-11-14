@@ -35,7 +35,7 @@ export default function Flow() {
 
     setEdges((eds) =>
       eds.map((edge) => {
-        if (edge.target === curNode.id) {
+        if (edge.target === curNode.id && edge.weight !== 0) {
           edge.hidden = false;
         }
         return edge;
