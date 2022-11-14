@@ -189,7 +189,7 @@ myNodes.forEach((node) => {
     id: String(node.id),
     className: 'circle',
     data: { label: node.label },
-    position: { x: node.position.x*3, y: node.position.y*2},
+    position: { x: node.position.x*3, y: node.position.y*3},
     type: 'defaultNode',
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
@@ -203,6 +203,11 @@ myNodes.forEach((node) => {
 var processedEdges = []
 const myEdges = myData.edges
 myEdges.forEach((edge) => {
+  var color
+  if (edge.edge_type === "SUPPORT")
+    color = 'green'
+  else
+    color = 'red'
   processedEdges.push({
     id: edge.start_node.toString()+"-"+edge.end_node.toString(),
     source: edge.start_node.toString(), 
@@ -210,7 +215,8 @@ myEdges.forEach((edge) => {
     layer: edge.layer+1,
     type: 'straight',
     hidden: true, 
-    markerEnd: {type: 'arrow', width: 20, height: 20}})
+    markerEnd: {type: 'arrow', width: 20, height: 20},
+    style: {stroke: color}})
 })
 
 const getInitialNodesHoverData = (nds, eds) => {
