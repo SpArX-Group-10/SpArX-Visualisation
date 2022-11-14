@@ -2,7 +2,7 @@ import React from "react";
 import { Handle, Position, useStore } from "reactflow";
 import Typography from "@mui/material/Typography";
 import { Box, Tooltip } from "@mui/material";
-import { NodeHoverCard } from "HoverCards";
+import { NodeHoverCard } from "./HoverCards";
 
 export default function GraphNode({ data }) {
   return (

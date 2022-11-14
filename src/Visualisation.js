@@ -1,7 +1,7 @@
 import ReactFlow, { Controls, Background, getIncomers } from "reactflow";
 import { useMemo, useState } from "react";
 import "reactflow/dist/style.css";
-import { nodes as initialNodes, edges as initialEdges } from "./GraphElements";
+import { nodes as processedNodes, edges as processedEdges } from "./GraphElements";
 import "./GraphElementsStyle.css";
 import GraphNode from "./Node";
 import React from "react";
@@ -16,10 +16,10 @@ const getInitialEdgesHoverData = (eds) => {
 };
 
 export default function Flow() {
-  var initialEdgesHoverData = getInitialEdgesHoverData(initialEdges);
+  var initialEdgesHoverData = getInitialEdgesHoverData(processedEdges);
 
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [nodes, setNodes] = useState(processedNodes);
+  const [edges, setEdges] = useState(processedEdges);
 
   const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
 
