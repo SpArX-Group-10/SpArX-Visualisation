@@ -214,7 +214,8 @@ myEdges.forEach((edge) => {
     target: edge.end_node.toString(),
     layer: edge.layer+1,
     type: 'straight',
-    hidden: true, 
+    hidden: true,
+    weight: edge.weight, 
     markerEnd: {type: 'arrow', width: 20, height: 20},
     style: {stroke: color}})
 })
