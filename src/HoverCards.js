@@ -4,14 +4,18 @@ const div_height = 50;
 const node_height = 30;
 const node_width = 30;
 const right_offset = 10;
-export const NodeHoverCard = ({ argument, incomingNodes }) => {
+export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attackingNodes }) => {
   var incoming = "[" + incomingNodes.map((nd) => nd.data.label).join(",") + "]";
+  var supporting_nodes = "[" + supportingNodes.join(",") + "]";
+  var attacking_nodes = "[" + attackingNodes.join(",") + "]";
 
   return (
     <div>
-      Node argument: {argument}
+      Node label: {argument}
       <br />
-      Directly supported/attacked by: {incoming}
+      Directly supported by: {supporting_nodes}
+      <br />
+      Dirrectly attacked by: {attacking_nodes}
     </div>
   );
 };

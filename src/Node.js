@@ -13,6 +13,8 @@ export default function GraphNode({ data }) {
           <NodeHoverCard
             argument={data.argument}
             incomingNodes={data.incomingNodes}
+            supportingNodes={data.supportingNodes}
+            attackingNodes={data.attackingNodes}
           />
         </React.Fragment>
       }
