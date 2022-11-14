@@ -1,5 +1,5 @@
 import ReactFlow, { Controls, Background, getIncomers } from "reactflow";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "reactflow/dist/style.css";
 import { nodes as initialNodes, edges as initialEdges } from "./GraphElements";
 import "./GraphElementsStyle.css";
@@ -20,6 +20,23 @@ export default function Flow() {
 
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+
+  const [graphJson, setGraphJson] = useState(null);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/graph', {
+      methods:'GET',
+      headers : {
+        'Content-Type':'application/json',
+      },
+    })
+    .then(response => response.text())
+    .then(response => {
+      setGraphJson(JSON.parse(response));
+      console.log(JSON.parse(response));
+    })
+    .catch(error => console.log(error));
+  }, []);
 
   const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
 
