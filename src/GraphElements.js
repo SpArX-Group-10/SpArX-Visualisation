@@ -59,6 +59,7 @@ export const jsonToGraph = (myData) => {
       },
       markerEnd: { type: "arrow", width: 20, height: 20 },
       style: { stroke: color },
+      animated: true,
     });
   });
 
