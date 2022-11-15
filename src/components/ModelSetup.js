@@ -3,47 +3,102 @@ import { ActivationFunction } from "../classes/Enums";
 
 import LayerInfo from "../classes/LayerInfo";
 
-function LayerInfoComponent({ layerInfo, layerIndex, layerInfoCallback, lockCount = false, lockActivation = false }) {
-    let activationOptionsValues = ["sigmoid", "tanh", "relu", "softmax"];
+function LayerInfoComponent({
+    layerInfo,
+    layerIndex,
+    nueronCountCallback,
+    activationCallback,
+    removeCallback,
+    lockCount = false,
+    lockActivation = false,
+}) {
     let activationOptions = Object.entries(ActivationFunction).map(([key, value]) => (
-        <option value={value}> {key} </option>
+        <option key={"activation" + layerIndex + value} value={value}>
+            {key}
+        </option>
     ));
     return (
         <div>
-            <div>
-                Layer: {layerIndex} | Neuron Count:
-                <input type="number" placeholder={layerInfo.nueronCount} disabled={lockCount} /> | Activation Function:
-                <select disabled={lockActivation} value={layerInfo.activationFunction}>
-                    {activationOptions}
-                </select>
-            </div>
-            {!lockCount && !lockActivation && <button onClick={() => layerInfoCallback(layerIndex)}>Remove</button>}
+            Layer: {layerIndex + 1} | Neuron Count:
+            <input
+                type="number"
+                value={layerInfo.nueronCount}
+                disabled={lockCount}
+                onChange={(e) => nueronCountCallback(layerIndex, e.target.value)}
+            />{" "}
+            | Activation Function:{" "}
+            <select
+                value={layerInfo.activationFunction}
+                disabled={lockActivation}
+                onChange={(e) => activationCallback(layerIndex, e.target.value)}
+            >
+                {activationOptions}
+            </select>
+            {!lockCount && !lockActivation && <button onClick={() => removeCallback(layerIndex)}>Remove</button>}
         </div>
     );
 }
 
-function ModelSetup({ inOutShape, ModelCallback }) {
-    let modelData = null;
-
+function ModelSetup({ inOutShape, modelCallback }) {
     const [inputLayerInfo, _] = useState(new LayerInfo(inOutShape[0], ActivationFunction.None));
     const [layerInfos, setLayerInfos] = useState([]);
     const [outputLayerInfo, setOutputLayerInfo] = useState(new LayerInfo(inOutShape[1], ActivationFunction.Sigmoid));
 
-    // let layerInfoComponents = layerInfos.map((layerInfo, i) => (
-    //     <LayerInfoComponent layerInfo={layerInfo} layerIndex={i} removeLayer={removeLayer} />
-    // ));
+    const addNewInfoLayer = () => {
+        let newLayerInfos = [...layerInfos];
+        newLayerInfos.push(new LayerInfo(4, ActivationFunction.ReLU));
+        setLayerInfos(newLayerInfos);
+    };
+
+    const removeCallback = (layerIndex) => {
+        let newLayerInfos = [...layerInfos];
+        newLayerInfos.splice(layerIndex, 1);
+        setLayerInfos(newLayerInfos);
+    };
+
+    const nueronCountCallback = (layerIndex, value) => {
+        let newLayerInfos = [...layerInfos];
+        newLayerInfos[layerIndex].nueronCount = value;
+        setLayerInfos(newLayerInfos);
+    };
+
+    const activationCallback = (layerIndex, value) => {
+        if (layerIndex >= layerInfos.length) {
+            setOutputLayerInfo(new LayerInfo(outputLayerInfo.nueronCount, value));
+        } else {
+            let newLayerInfos = [...layerInfos];
+            newLayerInfos[layerIndex].activationFunction = value;
+            setLayerInfos(newLayerInfos);
+        }
+    };
+
+    const nextClick = () => {
+        modelCallback(inputLayerInfo, layerInfos, outputLayerInfo);
+    };
+
+    let layerInfoComponents = layerInfos.map((layerInfo, i) => (
+        <LayerInfoComponent
+            key={"layerInfo" + i}
+            layerInfo={layerInfo}
+            layerIndex={i}
+            nueronCountCallback={nueronCountCallback}
+            activationCallback={activationCallback}
+            removeCallback={removeCallback}
+        />
+    ));
 
     return (
         <div>
-            <LayerInfoComponent layerInfo={inputLayerInfo} layerIndex={0} lockCount={true} lockActivation={true} />
-            {/* {layerInfoComponents} */}
+            <LayerInfoComponent layerInfo={inputLayerInfo} layerIndex={-1} lockCount={true} lockActivation={true} />
+            {layerInfoComponents}
+            <button onClick={addNewInfoLayer}>Add new Layer</button>
             <LayerInfoComponent
                 layerInfo={outputLayerInfo}
-                layerIndex={layerInfos.length + 1}
+                layerIndex={layerInfos.length}
                 lockCount={true}
-                lockActivation={false}
+                activationCallback={activationCallback}
             />
-            <button onClick={() => ModelCallback(modelData)}>Next</button>
+            <button onClick={(_e) => nextClick()}>Next</button>
         </div>
     );
 }

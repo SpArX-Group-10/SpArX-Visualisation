@@ -8,6 +8,7 @@ function Landing() {
     const [inOutShape, setInOutShape] = useState([0, 0]);
 
     let datasetData = null;
+    let model = null;
 
     const selectedDatasetCallback = (rDatasetData) => {
         setInOutShape(rDatasetData.getInOutShape());
@@ -15,9 +16,15 @@ function Landing() {
         setComponentsIndex(componentsIndex + 1);
     };
 
+    const modelCallback = (rModel) => {
+        model = rModel;
+        setComponentsIndex(componentsIndex + 1);
+    };
+
     let components = [
         <DatasetSelection selectedDatasetCallback={selectedDatasetCallback} />,
-        <ModelSetup inOutShape={inOutShape} ModelCallback={() => {}} />,
+        <ModelSetup inOutShape={inOutShape} modelCallback={modelCallback} />,
+        <p>Model train parameters</p>,
     ];
 
     return (
