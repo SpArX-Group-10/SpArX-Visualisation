@@ -1,5 +1,6 @@
 import { getIncomers, Position } from "reactflow";
 
+// Utilities
 const getNodesHoverData = (nds, eds) => {
   var hoverStateCards = {};
   nds.forEach((nd) => {
@@ -14,6 +15,31 @@ const getNodesHoverData = (nds, eds) => {
   return hoverStateCards;
 };
 
+const getNormalisedEdgesByLayer = (edges, layer) => {
+  var curLayerEdges = [];
+  var weights = [];
+  edges.forEach((edge) => {
+    if (edge.layer === layer) {
+      curLayerEdges.push(edge);
+      weights.push(edge.data.weight);
+    }
+  })
+
+  let minThreshold = 1;
+  let minVal = Math.min.apply(weights);
+  let maxVal = Math.max.apply(weights);
+
+  // Normalise edge weights using min-max normalisation
+  curLayerEdges.map((edge) => {
+    edge.weight = minThreshold + (edge.weight - minVal) / (maxVal - minVal)
+    return edge;
+  });
+
+  return curLayerEdges;
+}
+
+
+// Processing graph elements (nodes & edges)
 export const jsonToGraph = (myData) => {
   if (!myData) {
     return [[], []];
@@ -42,6 +68,7 @@ export const jsonToGraph = (myData) => {
 
   var processedEdges = [];
   const myEdges = myData.edges;
+  const numLayers = myEdges[myEdges.length - 1].layer + 1;
   myEdges.forEach((edge) => {
     var color;
     if (edge.edge_type === "SUPPORT") color = "green";
@@ -62,6 +89,12 @@ export const jsonToGraph = (myData) => {
       animated: true,
     });
   });
+ 
+  var normalizedEdges = [];
+  for (let layer = 1; layer <= numLayers; layer++) {
+    console.log(getNormalisedEdgesByLayer(processedEdges, layer));
+    normalizedEdges = normalizedEdges.concat(getNormalisedEdgesByLayer(processedEdges, layer));
+  }
 
   var nodesHoverData = getNodesHoverData(processedNodes, processedEdges);
 
@@ -73,7 +106,7 @@ export const jsonToGraph = (myData) => {
     return nd;
   });
 
-  return [nodes, processedEdges];
+  return [nodes, normalizedEdges];
 };
 
 // export const edges = processedEdges

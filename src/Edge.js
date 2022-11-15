@@ -24,6 +24,7 @@ export default function GraphEdge({
     targetY,
     targetPosition,
   });
+  const SCALING = 10;
   return (
     <Tooltip
       placement={"top"}
@@ -35,7 +36,7 @@ export default function GraphEdge({
     >
       <path
         id={id}
-        style={{...style, strokeWidth: (isHovered ? 3 : 1)}}
+        style={{...style, strokeWidth: (isHovered ? 3 : 1) * data.weight * SCALING}}
         className="react-flow__edge-path"
         d={edgePath}
         markerEnd={markerEnd}

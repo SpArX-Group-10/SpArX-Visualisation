@@ -10,8 +10,8 @@ import React from "react";
 export default function Flow() {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
-
   const [graphJson, setGraphJson] = useState(null);
+  const [k, setK] = useState(1);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/graph", {
@@ -90,6 +90,23 @@ export default function Flow() {
       >
         <Background />
         <Controls />
+
+        <div className="button-wrapper">
+          <label htmlFor="k">
+            <select
+              id="renderLayersCount"
+              value={k}
+              onChange={(event) => setK(event.target.value)}
+              //className="react-flow__panonscrollmode"
+              style = {{writingMode: "horizontal-tb"}}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>           
+          </label>
+          How many layers do you want to render?
+        </div>
       </ReactFlow>
     </div>
   );

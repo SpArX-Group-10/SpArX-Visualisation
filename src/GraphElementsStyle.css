@@ -7,3 +7,11 @@
     align-items: center;
     fontweight: 700;
   }
+
+.button-wrapper {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 15px;
+    z-index: 4;
+  }
