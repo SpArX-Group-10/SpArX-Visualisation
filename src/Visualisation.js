@@ -1,29 +1,42 @@
-import ReactFlow, { Controls, Background, getIncomers } from "reactflow";
-import { useMemo, useState } from "react";
+import ReactFlow, { Controls, Background } from "reactflow";
+import { useEffect, useMemo, useState } from "react";
 import "reactflow/dist/style.css";
-import { nodes as processedNodes, edges as processedEdges } from "./GraphElements";
+import { jsonToGraph } from "./GraphElements";
 import "./GraphElementsStyle.css";
+import GraphEdge from "./Edge";
 import GraphNode from "./Node";
 import React from "react";
 
-const getInitialEdgesHoverData = (eds) => {
-  var hoverStateCards = {};
-  eds.forEach((edge) => {
-    hoverStateCards[edge.id] = { weight: 0, edgeType: "SUPPORT" };
-  });
-
-  return hoverStateCards;
-};
-
 export default function Flow() {
-  var initialEdgesHoverData = getInitialEdgesHoverData(processedEdges);
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
 
-  const [nodes, setNodes] = useState(processedNodes);
-  const [edges, setEdges] = useState(processedEdges);
+  const [graphJson, setGraphJson] = useState(null);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/graph", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.text())
+      .then((response) => {
+        setGraphJson(JSON.parse(response));
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    const [nodes, edges] = jsonToGraph(graphJson);
+    setNodes(nodes);
+    setEdges(edges);
+  }, [graphJson]);
 
   const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
+  const edgeTypes = useMemo(() => ({ defaultEdge: GraphEdge }), []);
 
-  const renderPreviousLayer = (event, curNode) => {
+  const renderPreviousLayer = (_, curNode) => {
     setNodes((nds) =>
       nds.map((node) => {
         if (node.layer === curNode.layer - 1) {
@@ -35,8 +48,31 @@ export default function Flow() {
 
     setEdges((eds) =>
       eds.map((edge) => {
-        if (edge.target === curNode.id) {
+        if (edge.target === curNode.id && edge.data.weight !== 0) {
           edge.hidden = false;
+        }
+        return edge;
+      })
+    );
+  };
+
+  const showEdgeLabel = (_, curEdge) => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        return node;
+      })
+    );
+
+    setEdges((eds) =>
+      eds.map((edge) => {
+        if (edge === curEdge) {
+          if (curEdge.showing_label) {
+            curEdge.label = "";
+            curEdge.showing_label = false;
+          } else {
+            curEdge.label = String(curEdge.data.weight.toFixed(4));
+            curEdge.showing_label = true;
+          }
         }
         return edge;
       })
@@ -49,6 +85,7 @@ export default function Flow() {
         nodes={nodes}
         nodeTypes={nodeTypes}
         edges={edges}
+        edgeTypes={edgeTypes}
         onNodeClick={renderPreviousLayer}
       >
         <Background />
