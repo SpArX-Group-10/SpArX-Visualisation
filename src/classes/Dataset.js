@@ -14,6 +14,14 @@ class Dataset {
     }
 
     /**
+     *
+     * @returns {Number[]} - The number of neurons in the input and the ouput layer.
+     */
+    getInOutShape() {
+        return [this.xHeaders.length, this.yHeaders.length];
+    }
+
+    /**
      * Attempts to convert a string array to a one-hot array,
      * if the header is not a string, it is returned as is.
      *

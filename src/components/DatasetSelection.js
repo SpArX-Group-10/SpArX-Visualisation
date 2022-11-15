@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CSVReader from "react-csv-reader";
+import Dataset from "../classes/Dataset";
 
 function FeatureSelection({ headers, featureCallback }) {
     let usableHeaders = headers.slice(0, -1);
@@ -42,7 +43,8 @@ function DatasetSelection({ selectedDatasetCallback }) {
     };
 
     const featureCallback = (features) => {
-        selectedDatasetCallback(dataset, headers, features);
+        let datasetData = Dataset.constructFilteredData(dataset, headers, features);
+        selectedDatasetCallback(datasetData);
     };
 
     return (
