@@ -10,6 +10,18 @@ class SparxInfo {
         this.merger = merger;
         this.datapoint = datapoint;
     }
+
+    /**
+     *
+     * @returns {string} - The sparks configuration in json.
+     */
+    asJSON() {
+        return JSON.stringify(this);
+    }
+
+    static empty() {
+        return new SparxInfo(null, null, null);
+    }
 }
 
 export default SparxInfo;

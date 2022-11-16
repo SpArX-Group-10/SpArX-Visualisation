@@ -14,6 +14,21 @@ class TrainingInfo {
         this.optimiser = optimiser;
         this.lossFunction = lossFunction;
     }
+
+    /**
+     *
+     * @returns {string} - The class data in json.
+     */
+    asJSON() {
+        return JSON.stringify(this);
+    }
+
+    /**
+     * @returns {TrainingInfo} - Empty training info.
+     */
+    static empty() {
+        return new TrainingInfo(0, 0, 0, null, null);
+    }
 }
 
 export default TrainingInfo;
