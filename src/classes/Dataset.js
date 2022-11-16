@@ -22,6 +22,14 @@ class Dataset {
     }
 
     /**
+     *
+     * @returns {Number[]} - A datapoint from the dataset.
+     */
+    getRandomXDatapoint() {
+        return this.xData[Math.floor(Math.random() * this.xData.length)];
+    }
+
+    /**
      * Attempts to convert a string array to a one-hot array,
      * if the header is not a string, it is returned as is.
      *

@@ -18,4 +18,14 @@ const LossFunction = {
     CategoricalCrossentropy: "categoricalCrossentropy",
 };
 
-export { ActivationFunction, Optimiser, LossFunction };
+const Clusterer = {
+    KMeans: "kmeans",
+    Aggromerative: "aggromerative",
+};
+
+const Merger = {
+    Global: "global",
+    Local: "local",
+};
+
+export { ActivationFunction, Optimiser, LossFunction, Clusterer, Merger };
