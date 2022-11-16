@@ -6,14 +6,22 @@ import "./GraphElementsStyle.css";
 import GraphEdge from "./Edge";
 import GraphNode from "./Node";
 import React from "react";
+import {
+  CircularProgress,
+  Dialog,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 export default function Flow() {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [graphJson, setGraphJson] = useState(null);
   const [k, setK] = useState(1);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetch("http://127.0.0.1:5000/graph", {
       method: "GET",
       headers: {
@@ -23,6 +31,7 @@ export default function Flow() {
       .then((response) => response.text())
       .then((response) => {
         setGraphJson(JSON.parse(response));
+        setLoading(false);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -81,6 +90,12 @@ export default function Flow() {
 
   return (
     <div style={{ height: "100vh" }}>
+      <Dialog open={isLoading}>
+        <Stack justifyContent="center" alignItems="center" padding={2} gap={1}>
+          <CircularProgress />
+          <Typography>Loading Network Graph</Typography>
+        </Stack>
+      </Dialog>
       <ReactFlow
         nodes={nodes}
         nodeTypes={nodeTypes}
@@ -98,12 +113,12 @@ export default function Flow() {
               value={k}
               onChange={(event) => setK(event.target.value)}
               //className="react-flow__panonscrollmode"
-              style = {{writingMode: "horizontal-tb"}}
+              style={{ writingMode: "horizontal-tb" }}
             >
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
-            </select>           
+            </select>
           </label>
           How many layers do you want to render?
         </div>
