@@ -48,7 +48,7 @@ export default function Flow() {
   const renderPreviousLayer = (_, curNode) => {
     setNodes((nds) =>
       nds.map((node) => {
-        if (node.layer === curNode.layer - 1) {
+        if (node.layer >= curNode.layer - k) {
           node.hidden = false;
         }
         return node;
@@ -115,9 +115,9 @@ export default function Flow() {
               //className="react-flow__panonscrollmode"
               style={{ writingMode: "horizontal-tb" }}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
             </select>
           </label>
           How many layers do you want to render?
