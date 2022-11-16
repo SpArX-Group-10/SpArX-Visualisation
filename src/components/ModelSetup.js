@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ActivationFunction } from "../classes/Enums";
 
 import LayerInfo from "../classes/LayerInfo";
+import ModelInfo from "../classes/ModelInfo";
 
 function LayerInfoComponent({
     layerInfo,
@@ -73,7 +74,8 @@ function ModelSetup({ inOutShape, modelCallback }) {
     };
 
     const nextClick = () => {
-        modelCallback(inputLayerInfo, layerInfos, outputLayerInfo);
+        let rModel = new ModelInfo(inputLayerInfo, layerInfos, outputLayerInfo);
+        modelCallback(rModel);
     };
 
     let layerInfoComponents = layerInfos.map((layerInfo, i) => (

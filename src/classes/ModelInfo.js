@@ -11,3 +11,5 @@ class ModelInfo {
         this.outputLayerInfo = outputLayerInfo;
     }
 }
+
+export default ModelInfo;

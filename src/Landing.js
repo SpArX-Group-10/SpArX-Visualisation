@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Dataset from "./classes/Dataset";
 import DatasetSelection from "./components/DatasetSelection";
 import ModelSetup from "./components/ModelSetup";
+import TrainingSetup from "./components/TrainingSetup";
 
 function Landing() {
     const [componentsIndex, setComponentsIndex] = useState(0);
@@ -9,11 +9,12 @@ function Landing() {
 
     let datasetData = null;
     let model = null;
+    let trainingInfo = null;
 
     const selectedDatasetCallback = (rDatasetData) => {
-        setInOutShape(rDatasetData.getInOutShape());
         datasetData = rDatasetData;
         setComponentsIndex(componentsIndex + 1);
+        setInOutShape(rDatasetData.getInOutShape());
     };
 
     const modelCallback = (rModel) => {
@@ -21,10 +22,16 @@ function Landing() {
         setComponentsIndex(componentsIndex + 1);
     };
 
+    const trainingSetupCallback = (rTrainingInfo) => {
+        trainingInfo = rTrainingInfo;
+        setComponentsIndex(componentsIndex + 1);
+    };
+
     let components = [
         <DatasetSelection selectedDatasetCallback={selectedDatasetCallback} />,
         <ModelSetup inOutShape={inOutShape} modelCallback={modelCallback} />,
-        <p>Model train parameters</p>,
+        <TrainingSetup trainingSetupCallback={trainingSetupCallback} />,
+        <p>SPARKX stuff</p>,
     ];
 
     return (

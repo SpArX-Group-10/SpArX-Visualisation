@@ -6,4 +6,16 @@ const ActivationFunction = {
     Softmax: "softmax",
 };
 
-export { ActivationFunction };
+const Optimiser = {
+    SGD: "sgd",
+    RMSProp: "rmsprop",
+    Adam: "adam",
+};
+
+const LossFunction = {
+    MeanSquaredError: "meanSquaredError",
+    BinaryCrossentropy: "binaryCrossentropy",
+    CategoricalCrossentropy: "categoricalCrossentropy",
+};
+
+export { ActivationFunction, Optimiser, LossFunction };
