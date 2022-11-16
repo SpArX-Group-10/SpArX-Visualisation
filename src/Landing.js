@@ -18,7 +18,7 @@ function Landing() {
     const [trainingInfo, setTrainingInfo] = useState(TrainingInfo.empty());
     const [sparxInfo, setSparxInfo] = useState(SparxInfo.empty());
 
-    const devMode = false;
+    const devMode = true;
 
     const selectedDatasetCallback = (rDatasetData) => {
         setDataset(rDatasetData);

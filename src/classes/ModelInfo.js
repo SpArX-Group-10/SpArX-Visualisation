@@ -16,7 +16,7 @@ class ModelInfo {
      * @returns {string} - The layer informations in json.
      */
     asJSON() {
-        return JSON.stringify(this.inputLayerInfo + this.layerInfos + this.outputLayerInfo);
+        return JSON.stringify([this.inputLayerInfo, ...this.layerInfos, this.outputLayerInfo]);
     }
 
     /**
