@@ -4,10 +4,12 @@ export const NodeHoverCard = ({
   incomingNodes,
   supportingNodes,
   attackingNodes,
+  topN,
 }) => {
   // var incoming = "[" + incomingNodes.map((nd) => nd.data.label).join(",") + "]";
   var supporting_nodes = "[" + supportingNodes.join(",") + "]";
   var attacking_nodes = "[" + attackingNodes.join(",") + "]";
+  console.log(topN);
 
   return (
     <div>
