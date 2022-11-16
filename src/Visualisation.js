@@ -6,9 +6,12 @@ import "./GraphElementsStyle.css";
 import GraphEdge from "./Edge";
 import GraphNode from "./Node";
 import React from "react";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {
   CircularProgress,
   Dialog,
+  Menu,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
@@ -19,6 +22,9 @@ export default function Flow() {
   const [graphJson, setGraphJson] = useState(null);
   const [k, setK] = useState(1);
   const [isLoading, setLoading] = useState(false);
+  const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
+
+  const settingsOpen = Boolean(settingsAnchorEl);
 
   useEffect(() => {
     setLoading(true);
@@ -105,23 +111,44 @@ export default function Flow() {
       >
         <Background />
         <Controls />
-
-        <div className="button-wrapper">
-          <label htmlFor="k">
-            <select
-              id="renderLayersCount"
-              value={k}
-              onChange={(event) => setK(event.target.value)}
-              //className="react-flow__panonscrollmode"
-              style={{ writingMode: "horizontal-tb" }}
-            >
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-            </select>
-          </label>
-          How many layers do you want to render?
-        </div>
+        <SettingsIcon
+          onClick={(event) => {
+            setSettingsAnchorEl(event.currentTarget);
+          }}
+          style={{zIndex: 100, position: "absolute", top: "0px", right: "100px"}}
+        />
+        <Menu
+          anchorEl={settingsAnchorEl}
+          open={settingsOpen}
+          onClose={() => {
+            setSettingsAnchorEl(null);
+          }}
+          PaperProps={{  
+            style: {  
+              width: 350, 
+              height: 50 
+            },  
+         }} 
+        >
+          <MenuItem>
+            <div className="button-wrapper">
+              <label htmlFor="k">
+                <select
+                  id="renderLayersCount"
+                  value={k}
+                  onChange={(event) => setK(event.target.value)}
+                  //className="react-flow__panonscrollmode"
+                  style={{ writingMode: "horizontal-tb" }}
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                </select>
+              </label>
+              How many layers do you want to render?
+            </div>
+          </MenuItem>
+        </Menu>
       </ReactFlow>
     </div>
   );
