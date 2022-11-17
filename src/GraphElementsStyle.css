@@ -1,17 +1,17 @@
 .react-flow__node.circle {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    fontweight: 700;
-  }
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  fontweight: 700;
+}
 
 .button-wrapper {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    font-size: 15px;
-    z-index: 4;
-  }
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 15px;
+  z-index: 4;
+}

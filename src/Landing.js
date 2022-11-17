@@ -64,9 +64,7 @@ function Landing() {
             body: JSON.stringify(data),
         })
             .then((response) => response.json())
-            .then((data) => {
-                navigate("/visualisation", { state: { graphJSON: data } });
-            });
+            .then((data) => navigate("/visualisation", { state: { graphJSON: data } }));
     };
 
     let components = [

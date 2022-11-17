@@ -13,14 +13,16 @@ import { CircularProgress, Dialog, Menu, MenuItem, Stack, Typography } from "@mu
 export default function Flow() {
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
+    const [graphJson, setGraphJson] = useState(null);
     const [k, setK] = useState(1);
+    const [top, setTop] = useState(1);
+    const [isLoading, setLoading] = useState(false);
     const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
 
     const settingsOpen = Boolean(settingsAnchorEl);
     const location = useLocation();
 
     useEffect(() => {
-        console.log(location);
         if (!location.state) return;
         const [nodes, edges] = jsonToGraph(location.state.graphJSON);
         setNodes(nodes);
@@ -71,10 +73,30 @@ export default function Flow() {
                 return edge;
             })
         );
+        setEdges((eds) =>
+            eds.map((edge) => {
+                if (edge === curEdge) {
+                    if (curEdge.showing_label) {
+                        curEdge.label = "";
+                        curEdge.showing_label = false;
+                    } else {
+                        curEdge.label = String(curEdge.data.weight.toFixed(4));
+                        curEdge.showing_label = true;
+                    }
+                }
+                return edge;
+            })
+        );
     };
 
     return (
         <div style={{ height: "100vh" }}>
+            <Dialog open={isLoading}>
+                <Stack justifyContent="center" alignItems="center" padding={2} gap={1}>
+                    <CircularProgress />
+                    <Typography>Loading Network Graph</Typography>
+                </Stack>
+            </Dialog>
             <ReactFlow
                 nodes={nodes}
                 nodeTypes={nodeTypes}
@@ -88,7 +110,7 @@ export default function Flow() {
                     onClick={(event) => {
                         setSettingsAnchorEl(event.currentTarget);
                     }}
-                    style={{ zIndex: 100, position: "absolute", top: "0px", right: "100px" }}
+                    style={{ zIndex: 100, position: "absolute", top: "0px", left: "20px" }}
                 />
                 <Menu
                     anchorEl={settingsAnchorEl}
@@ -104,13 +126,12 @@ export default function Flow() {
                     }}
                 >
                     <MenuItem>
-                        <div className="button-wrapper">
-                            <label htmlFor="k">
+                        <div className="button-wrapper-layer">
+                            <label htmlFor="num_layers_rendered">
                                 <select
                                     id="renderLayersCount"
                                     value={k}
                                     onChange={(event) => setK(event.target.value)}
-                                    //className="react-flow__panonscrollmode"
                                     style={{ writingMode: "horizontal-tb" }}
                                 >
                                     <option value={1}>1</option>
@@ -119,6 +140,26 @@ export default function Flow() {
                                 </select>
                             </label>
                             How many layers do you want to render?
+                        </div>
+                    </MenuItem>
+                    <div style={{ height: "10px" }}></div>
+                    <MenuItem>
+                        <div className="button-wrapper-att-supp">
+                            <label htmlFor="top_att_supp_showed">
+                                <select
+                                    id="renderTopAttSupp"
+                                    value={top}
+                                    onChange={(event) => setTop(event.target.value)}
+                                    style={{ writingMode: "horizontal-tb" }}
+                                >
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                    <option value={4}>4</option>
+                                    <option value={5}>5</option>
+                                </select>
+                            </label>
+                            How many of the top attackers/supporters do you want to show?
                         </div>
                     </MenuItem>
                 </Menu>
