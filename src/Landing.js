@@ -11,7 +11,7 @@ import ModelInfo from "./classes/ModelInfo";
 import TrainingInfo from "./classes/TrainingInfo";
 import SparxInfo from "./classes/SparxInfo";
 
-const API_ENDPOINT = "http://localhost:5000/api/sparx";
+const API_ENDPOINT = "api/sparx";
 
 function Landing() {
     const [componentsIndex, setComponentsIndex] = useState(0);
