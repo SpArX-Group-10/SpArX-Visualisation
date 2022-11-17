@@ -16,6 +16,7 @@ export default function Flow() {
     const [graphJson, setGraphJson] = useState(null);
     const [k, setK] = useState(1);
     const [top, setTop] = useState(1);
+    const [showTop, setShowTop] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
 
@@ -33,23 +34,56 @@ export default function Flow() {
     const edgeTypes = useMemo(() => ({ defaultEdge: GraphEdge }), []);
 
     const renderPreviousLayer = (_, curNode) => {
-        setNodes((nds) =>
-            nds.map((node) => {
-                if (node.layer >= curNode.layer - k) {
-                    node.hidden = false;
-                }
-                return node;
-            })
+        if (showTop) {
+            // Show top attackers/supporters from previous layer
+            setNodes((nds) =>
+                nds.map((node) => {
+                    const suppLen = curNode.supportingNodes.length;
+                    const attLen = curNode.attackingNodes.length;
+                    for (var i=0; i<Math.min(top, attLen); i++) {
+                        if (node.data.label === curNode.attackingNodes[i]) {
+                                node.hidden = false;
+                            }
+                    }
+
+                    for (var i=0; i<Math.min(top, suppLen); i++) {
+                        if (node.data.label === curNode.supportingNodes[suppLen-1-i]) {
+                                node.hidden = false;
+                            }
+                    }
+                    return node;
+                })
+            );
+
+            setEdges((eds) =>
+                eds.map((edge) => {
+                    if (edge.target === curNode.id && edge.data.weight !== 0) {
+                        edge.hidden = false;
+                    }
+                    return edge;
+                })
         );
 
-        setEdges((eds) =>
-            eds.map((edge) => {
-                if (edge.target === curNode.id && edge.data.weight !== 0) {
-                    edge.hidden = false;
-                }
-                return edge;
-            })
-        );
+        } else {
+            // Show k previous layers
+            setNodes((nds) =>
+                nds.map((node) => {
+                    if (node.layer >= curNode.layer - k) {
+                        node.hidden = false;
+                    }
+                    return node;         
+                })
+            );
+
+            setEdges((eds) =>
+                eds.map((edge) => {
+                    if (edge.layer >= curNode.layer - k && edge.data.weight !== 0) {
+                        edge.hidden = false;
+                    }
+                    return edge;
+                })
+            );
+            }
     };
 
     const showEdgeLabel = (_, curEdge) => {
@@ -120,13 +154,31 @@ export default function Flow() {
                     }}
                     PaperProps={{
                         style: {
-                            width: 350,
-                            height: 50,
+                            width: 560,
+                            height: 150,
                         },
                     }}
                 >
                     <MenuItem>
+                        <div className="button-wrapper-att-supp">
+                        Do you want to show top attackers/supporters?__
+                            <label htmlFor="show_top_att_supp_showed">
+                                <select
+                                    id="renderShowTopAttSupp"
+                                    value={showTop}
+                                    onChange={(event) => setShowTop(event.target.value)}
+                                    style={{ writingMode: "horizontal-tb" }}
+                                >
+                                    <option value={false}>false</option>
+                                    <option value={true}>true</option>
+                                </select>
+                            </label>
+                        </div>
+                    </MenuItem>
+                    <div style={{ height: "10px" }}></div>
+                    <MenuItem>
                         <div className="button-wrapper-layer">
+                        How many layers do you want to render?__
                             <label htmlFor="num_layers_rendered">
                                 <select
                                     id="renderLayersCount"
@@ -139,12 +191,12 @@ export default function Flow() {
                                     <option value={3}>3</option>
                                 </select>
                             </label>
-                            How many layers do you want to render?
                         </div>
                     </MenuItem>
                     <div style={{ height: "10px" }}></div>
                     <MenuItem>
                         <div className="button-wrapper-att-supp">
+                        How many of the top attackers/supporters do you want to show?__
                             <label htmlFor="top_att_supp_showed">
                                 <select
                                     id="renderTopAttSupp"
@@ -159,7 +211,6 @@ export default function Flow() {
                                     <option value={5}>5</option>
                                 </select>
                             </label>
-                            How many of the top attackers/supporters do you want to show?
                         </div>
                     </MenuItem>
                 </Menu>

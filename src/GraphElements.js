@@ -80,7 +80,7 @@ export const jsonToGraph = (myData) => {
             type: "defaultEdge",
             hidden: true,
             data: {
-                weight: edge.weight,
+                weight: parseFloat(edge.weight.toFixed(4)),
                 edgeType: edge.edge_type,
             },
             markerEnd: { type: "arrow", width: 20, height: 20 },
