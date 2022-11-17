@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { selectorCreator } from "../classes/Utility";
+import { numericInputCreator, selectorCreator } from "../classes/Utility";
 import { Clusterer, Merger } from "../classes/Enums";
 import SparxInfo from "../classes/SparxInfo";
 
@@ -15,12 +15,13 @@ function DatapointInputs({ datapoint, xHeaders, dataPointCallback }) {
 }
 
 function SparxSetup({ dataset, sparxSetupCallback }) {
+    const [shrinkage, setShrinkage] = useState(0.5);
     const [clusterer, setClusterer] = useState(Clusterer.KMeans);
-    const [merger, setMerger] = useState(Merger.Local);
+    const [merger, setMerger] = useState(Merger.Global);
     const [datapoint, setDatapoint] = useState(dataset.getRandomXDatapoint());
 
     const nextClick = () => {
-        let sparxInfo = new SparxInfo(clusterer, merger, datapoint);
+        let sparxInfo = new SparxInfo(shrinkage, clusterer, merger, datapoint);
         sparxSetupCallback(sparxInfo);
     };
 
@@ -33,6 +34,7 @@ function SparxSetup({ dataset, sparxSetupCallback }) {
 
     return (
         <div>
+            {numericInputCreator("Shrinkage", shrinkage, setShrinkage, parseFloat)}
             {selectorCreator("Clusterer", clusterer, Clusterer, setClusterer)}
             {selectorCreator("Merger", merger, Merger, setMerger)}
             {merger === Merger.Local && (

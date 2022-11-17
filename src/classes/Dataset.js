@@ -67,14 +67,6 @@ class Dataset {
     }
 
     /**
-     *
-     * @returns {string} - the whole dataset in json.
-     */
-    asJSON() {
-        return JSON.stringify(this);
-    }
-
-    /**
      * Constructs a Dataset object from a CSV file.
      * @param {Object[]} dataset - The dataset to construct from.
      * @param {string[]} headers - The headers of the dataset.

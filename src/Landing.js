@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import DatasetSelection from "./components/DatasetSelection";
 import ModelSetup from "./components/ModelSetup";
 import TrainingSetup from "./components/TrainingSetup";
@@ -9,6 +11,8 @@ import ModelInfo from "./classes/ModelInfo";
 import TrainingInfo from "./classes/TrainingInfo";
 import SparxInfo from "./classes/SparxInfo";
 
+const API_ENDPOINT = "http://localhost:5000/api/sparx";
+
 function Landing() {
     const [componentsIndex, setComponentsIndex] = useState(0);
     const [inOutShape, setInOutShape] = useState([0, 0]);
@@ -18,7 +22,9 @@ function Landing() {
     const [trainingInfo, setTrainingInfo] = useState(TrainingInfo.empty());
     const [sparxInfo, setSparxInfo] = useState(SparxInfo.empty());
 
-    const devMode = true;
+    const navigate = useNavigate();
+
+    const devMode = false;
 
     const selectedDatasetCallback = (rDatasetData) => {
         setDataset(rDatasetData);
@@ -39,6 +45,28 @@ function Landing() {
     const sparxSetupCallback = (rSparxInfo) => {
         setSparxInfo(rSparxInfo);
         setComponentsIndex(componentsIndex + 1);
+
+        sendToServer(rSparxInfo);
+    };
+
+    const sendToServer = (sparxInfo) => {
+        // sparxs info is passed in because otherwise it won't be updated in time
+        const data = {
+            dataset: dataset,
+            modelInfo: modelInfo,
+            trainingInfo: trainingInfo,
+            sparxInfo: sparxInfo,
+        };
+
+        fetch(API_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                navigate("/visualisation", { state: { graphJSON: data } });
+            });
     };
 
     let components = [
@@ -46,7 +74,7 @@ function Landing() {
         <ModelSetup inOutShape={inOutShape} modelCallback={modelCallback} />,
         <TrainingSetup trainingSetupCallback={trainingSetupCallback} />,
         <SparxSetup dataset={dataset} sparxSetupCallback={sparxSetupCallback} />,
-        <p>SPARX stuff</p>,
+        <p>Waiting for server to respond</p>,
     ];
 
     return (
@@ -55,10 +83,10 @@ function Landing() {
             {components[componentsIndex]}
             {devMode && (
                 <div>
-                    <p>{dataset.asJSON()}</p>
-                    <p>{modelInfo.asJSON()}</p>
-                    <p>{trainingInfo.asJSON()}</p>
-                    <p>{sparxInfo.asJSON()}</p>
+                    <p>{JSON.stringify(dataset)}</p>
+                    <p>{JSON.stringify(modelInfo)}</p>
+                    <p>{JSON.stringify(trainingInfo)}</p>
+                    <p>{JSON.stringify(sparxInfo)}</p>
                 </div>
             )}
         </div>

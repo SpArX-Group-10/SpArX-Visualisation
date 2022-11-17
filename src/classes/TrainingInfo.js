@@ -16,14 +16,6 @@ class TrainingInfo {
     }
 
     /**
-     *
-     * @returns {string} - The class data in json.
-     */
-    asJSON() {
-        return JSON.stringify(this);
-    }
-
-    /**
      * @returns {TrainingInfo} - Empty training info.
      */
     static empty() {

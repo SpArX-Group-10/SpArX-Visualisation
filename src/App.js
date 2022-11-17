@@ -24,8 +24,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/setup" element={<Landing />} />
+                <Route exact path="/" element={<Landing />} />
                 <Route exact path="/visualisation" element={<Flow />} />
             </Routes>
         </BrowserRouter>

@@ -13,9 +13,9 @@ const Optimiser = {
 };
 
 const LossFunction = {
-    MeanSquaredError: "meanSquaredError",
-    BinaryCrossentropy: "binaryCrossentropy",
-    CategoricalCrossentropy: "categoricalCrossentropy",
+    MeanSquaredError: "mean_squared_error",
+    BinaryCrossentropy: "binary_crossentropy",
+    CategoricalCrossentropy: "categorical_crossentropy",
 };
 
 const Clusterer = {
