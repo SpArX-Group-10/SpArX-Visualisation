@@ -1,3 +1,4 @@
-[submodule "server/SpArX"]
-	path = server/SpArX
+[submodule "server/sparx"]
+	path = server/sparx
 	url = https://github.com/SpArX-Group-10/SpArX.git
+	branch = cleanup
