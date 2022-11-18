@@ -7103,7 +7103,7 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-papaparse@^5.3.0:
+papaparse@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.2.tgz#d1abed498a0ee299f103130a6109720404fbd467"
   integrity sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==
@@ -7947,13 +7947,6 @@ react-app-polyfill@^3.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
-
-react-csv-reader@^3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/react-csv-reader/-/react-csv-reader-3.5.2.tgz#8eead2dbbdfc0474faa59a420da581e354105c75"
-  integrity sha512-SRjVAHaLOFy3s7R8iJdN0PHcIdLs+8MHy97fsZeSPD1feB/Fg2qidgALmu9DUHneMa0rkNDG/qeFp//r7HWH8Q==
-  dependencies:
-    papaparse "^5.3.0"
 
 react-dev-utils@^12.0.1:
   version "12.0.1"
