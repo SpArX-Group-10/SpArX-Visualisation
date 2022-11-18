@@ -101,6 +101,7 @@ function Landing() {
             height: "350px",
             width: "600px",
             backgroundColor: "#c5fcd4",
+            borderRadius: "20px"
           }}
         >
           {components[componentsIndex]}

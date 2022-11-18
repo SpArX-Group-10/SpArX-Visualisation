@@ -53,8 +53,10 @@ function FeatureSelection({
       style={{
         textAlign: "left",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "start",
         display: "flex",
+        height: "100vh",
+        overflow: "auto",
         marginTop: 20,
       }}
     >
