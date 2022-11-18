@@ -169,8 +169,8 @@ export default function Flow() {
                                     onChange={(event) => setShowTop(event.target.value)}
                                     style={{ writingMode: "horizontal-tb" }}
                                 >
-                                    <option value={false}>false</option>
-                                    <option value={true}>true</option>
+                                    <option value={false}>No</option>
+                                    <option value={true}>Yes</option>
                                 </select>
                             </label>
                         </div>
