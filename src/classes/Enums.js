@@ -20,7 +20,7 @@ const LossFunction = {
 
 const Clusterer = {
     KMeans: "kmeans",
-    Aggromerative: "aggromerative",
+    Agglomerative: "agglomerative",
 };
 
 const Merger = {
