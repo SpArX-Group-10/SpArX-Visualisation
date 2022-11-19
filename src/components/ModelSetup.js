@@ -1,3 +1,4 @@
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { ActivationFunction } from "../classes/Enums";
 
@@ -35,7 +36,14 @@ function LayerInfoComponent({
             >
                 {activationOptions}
             </select>
-            {!lockCount && !lockActivation && <button onClick={() => removeCallback(layerIndex)}>Remove</button>}
+            {!lockCount && !lockActivation &&
+                <Button
+                    variant="contained"
+                    component="label"
+                    style={{ backgroundColor: "#1565C0" }}
+                    onClick={() => removeCallback(layerIndex)}
+                > Remove </Button>
+            }
         </div>
     );
 }
@@ -91,16 +99,38 @@ function ModelSetup({ inOutShape, modelCallback }) {
 
     return (
         <div>
-            <LayerInfoComponent layerInfo={inputLayerInfo} layerIndex={-1} lockCount={true} lockActivation={true} />
-            {layerInfoComponents}
-            <button onClick={addNewInfoLayer}>Add new Layer</button>
-            <LayerInfoComponent
-                layerInfo={outputLayerInfo}
-                layerIndex={layerInfos.length}
-                lockCount={true}
-                activationCallback={activationCallback}
-            />
-            <button onClick={(_e) => nextClick()}>Next</button>
+            <Box
+                style={{
+                    justifyContent: "center",
+                    alignItems: "start",
+                    flexDirection: "column",
+                    flexWrap: "wrap",
+                    height: "30vh",
+                    overflow: "auto",
+                    marginTop: 20,
+                }}
+            >
+                <LayerInfoComponent layerInfo={inputLayerInfo} layerIndex={-1} lockCount={true} lockActivation={true} />
+                {layerInfoComponents}
+                <Button
+                    variant="contained"
+                    component="label"
+                    style={{ backgroundColor: "#1565C0" }}
+                    onClick={addNewInfoLayer}
+                > Add new Layer </Button>
+                <LayerInfoComponent
+                    layerInfo={outputLayerInfo}
+                    layerIndex={layerInfos.length}
+                    lockCount={true}
+                    activationCallback={activationCallback}
+                />
+                <Button
+                    variant="contained"
+                    component="label"
+                    style={{ backgroundColor: "#1565C0" }}
+                    onClick={(_e) => nextClick()}
+                > Next </Button>
+            </Box>
         </div>
     );
 }
