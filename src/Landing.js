@@ -82,7 +82,7 @@ function Landing() {
   return (
     <Box
       sx={{
-        backgroundColor: "#1a7d35",
+        backgroundColor: "#1565C0",
         height: "100vh",
         width: "100vw",
         justifyContent: "center",
@@ -100,7 +100,7 @@ function Landing() {
           style={{
             height: "350px",
             width: "600px",
-            backgroundColor: "#c5fcd4",
+            backgroundColor: "#c7e8fb",
             borderRadius: "20px"
           }}
         >

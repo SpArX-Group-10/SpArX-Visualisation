@@ -35,9 +35,9 @@ function FeatureSelection({
             id={header}
             onChange={(event) => handleCheckboxesChange(i)}
             sx={{
-              color: "#1a7d35",
+              color: "#1565C0",
               "&.Mui-checked": {
-                color: "#1a7d35",
+                color: "#1565C0",
               },
             }}
           />
@@ -114,7 +114,7 @@ function DatasetSelection({ selectedDatasetCallback }) {
             <Button
               variant="contained"
               component="label"
-              style={{ backgroundColor: "#1a7d35" }}
+              style={{ backgroundColor: "#1565C0" }}
             >
               <UploadFileIcon />
               Upload Dataset

@@ -18,7 +18,7 @@ const NextButton = ({ onClick }) => {
           borderRadius: "50%",
           height: "65px",
           width: "20px",
-          backgroundColor: "#1a7d35",
+          backgroundColor: "#1565C0",
           color: "white",
         }}
         onClick={onClick}
