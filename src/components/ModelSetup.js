@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography, Input, Select } from "@mui/material";
 import { useState } from "react";
 import { ActivationFunction } from "../classes/Enums";
 
@@ -21,21 +21,23 @@ function LayerInfoComponent({
     ));
     return (
         <div>
-            Layer: {layerIndex + 1} | Neuron Count:
-            <input
+            <Typography variant="h6">Layer {layerIndex + 1} </Typography>
+            Neuron Count: {" "}
+            <Input
                 type="number"
                 value={layerInfo.nueronCount}
                 disabled={lockCount}
                 onChange={(e) => nueronCountCallback(layerIndex, e.target.value)}
-            />{" "}
+                width="100px"
+            />{" "} 
             | Activation Function:{" "}
-            <select
+            <Select
                 value={layerInfo.activationFunction}
                 disabled={lockActivation}
                 onChange={(e) => activationCallback(layerIndex, e.target.value)}
             >
                 {activationOptions}
-            </select>
+            </Select>
             {!lockCount && !lockActivation &&
                 <Button
                     variant="contained"
