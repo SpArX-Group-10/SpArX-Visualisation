@@ -36,7 +36,6 @@ function LayerInfoComponent({
                 value={layerInfo.activationFunction}
                 disabled={lockActivation}
                 onChange={(e) => {
-                    console.log(e.target.value);
                     activationCallback(layerIndex, e.target.value)
                 }}
             >{activationOptions.map((activationOption) => {
