@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Input, Select } from "@mui/material";
+import { Box, Button, Typography, Input, Select, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { ActivationFunction } from "../classes/Enums";
 
@@ -28,16 +28,24 @@ function LayerInfoComponent({
                 value={layerInfo.nueronCount}
                 disabled={lockCount}
                 onChange={(e) => nueronCountCallback(layerIndex, e.target.value)}
-                width="100px"
-            />{" "} 
+                width="50px"
+            />{" "}
+
             | Activation Function:{" "}
             <Select
                 value={layerInfo.activationFunction}
                 disabled={lockActivation}
-                onChange={(e) => activationCallback(layerIndex, e.target.value)}
+                onChange={(e) => {
+                    console.log(e.target.value);
+                    activationCallback(layerIndex, e.target.value)
+                }}
             >
-                {activationOptions}
+                {activationOptions.map(activationOption => {
+                    return <MenuItem value={activationOption.props.value}>{activationOption.props.children}</MenuItem>
+                })}
+                {/* {activationOptions} */}
             </Select>
+
             {!lockCount && !lockActivation &&
                 <Button
                     variant="contained"
