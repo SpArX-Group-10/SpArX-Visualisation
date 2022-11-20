@@ -39,10 +39,9 @@ function LayerInfoComponent({
                     console.log(e.target.value);
                     activationCallback(layerIndex, e.target.value)
                 }}
-            >
-                {activationOptions.map(activationOption => {
-                    return <MenuItem value={activationOption.props.value}>{activationOption.props.children}</MenuItem>
-                })}
+            >{activationOptions.map(activationOption => {
+                return <MenuItem value={activationOption.props.value}>{activationOption.props.children}</MenuItem>
+            })}
             </Select>
 
             {!lockCount && !lockActivation &&
