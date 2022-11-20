@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Input, Typography, Select, MenuItem } from "@mui/material";
 import { Optimiser, LossFunction } from "../classes/Enums";
 import { selectorCreator, numericInputCreator } from "../classes/Utility";
 import TrainingInfo from "../classes/TrainingInfo";
@@ -17,12 +18,69 @@ function TrainingSetup({ trainingSetupCallback }) {
 
     return (
         <div>
-            {numericInputCreator("Epochs", epochs, setEpochs, parseInt)}
-            {numericInputCreator("Learning Rate", learningRate, setLearningRate, parseFloat)}
-            {numericInputCreator("Validation Split", validationSplit, setValidationSplit, parseFloat)}
-            {selectorCreator("Optimiser", optimiser, Optimiser, setOptimiser)}
-            {selectorCreator("Loss Function", lossFunction, LossFunction, setLossFunction)}
-            <button onClick={(_e) => nextClick()}>Next</button>
+            <Typography variant="h6"> Epochs: {" "}
+                <Input
+                    placeholder="Epochs"
+                    type="number"
+                    value={epochs}
+                    onChange={(e) => {
+                        // Ensure that the number of epochs is a integer
+                        e.target.value = parseInt(e.target.value);
+                        setEpochs(e.target.value);
+                    }}
+                />
+            </Typography>
+
+            <Typography variant="h6"> Learning Rate: {" "}
+                <Input
+                    placeholder="Learning Rate"
+                    type="number"
+                    value={learningRate}
+                    onChange={(e) => { setLearningRate(e.target.value) }}
+                />
+            </Typography>
+
+            <Typography variant="h6"> Validation Split: {" "}
+                <Input
+                    placeholder="Validation Split"
+                    type="number"
+                    value={validationSplit}
+                    onChange={(e) => { setValidationSplit(e.target.value) }}
+                />
+            </Typography>
+
+            <Typography variant="h6"> Optimiser: {" "}
+                <Select
+                    placeholder="Optimiser"
+                    value={optimiser}
+                    onChange={(e) => {
+                        setOptimiser(e.target.value)
+                    }}
+                >
+                    <MenuItem value={Optimiser.SGD}> SGD </MenuItem>
+                    <MenuItem value={Optimiser.RMSProp}> RMSProp </MenuItem>
+                    <MenuItem value={Optimiser.Adam}> Adam </MenuItem>
+                </Select>
+            </Typography>
+
+            <Typography variant="h6"> Loss Function: {" "}
+                <Select
+                    placeholder="Loss Function"
+                    value={lossFunction}
+                    onChange={(e) => { setLossFunction(e.target.value) }}
+                >
+                    <MenuItem value={LossFunction.MeanSquaredError}> Mean Squared Error </MenuItem>
+                    <MenuItem value={LossFunction.BinaryCrossentropy}> Binary Cross Entropy </MenuItem>
+                    <MenuItem value={LossFunction.CategoricalCrossentropy}> Categorical Cross Entropy </MenuItem>
+                </Select>
+            </Typography>
+
+            <Button
+                variant="contained"
+                component="label"
+                style={{ backgroundColor: "#1565C0" }}
+                onClick={nextClick}
+            > Next </Button>
         </div>
     );
 }
