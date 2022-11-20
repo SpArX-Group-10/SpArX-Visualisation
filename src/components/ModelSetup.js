@@ -21,7 +21,7 @@ function LayerInfoComponent({
     ));
     return (
         <div>
-            <Typography variant="h6">Layer {layerIndex + 1} </Typography>
+            <Typography variant="h6"> Layer {layerIndex + 1} </Typography>
             Neuron Count: {" "}
             <Input
                 type="number"
@@ -43,7 +43,6 @@ function LayerInfoComponent({
                 {activationOptions.map(activationOption => {
                     return <MenuItem value={activationOption.props.value}>{activationOption.props.children}</MenuItem>
                 })}
-                {/* {activationOptions} */}
             </Select>
 
             {!lockCount && !lockActivation &&
