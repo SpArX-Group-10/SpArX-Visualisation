@@ -15,6 +15,8 @@ export default function GraphNode({ data }) {
             incomingNodes={data.incomingNodes}
             supportingNodes={data.supportingNodes}
             attackingNodes={data.attackingNodes}
+            supportingWeights={data.supportingWeights}
+            attackingWeights={data.attackingWeights}
             topN={data.topN}
           />
         </React.Fragment>
