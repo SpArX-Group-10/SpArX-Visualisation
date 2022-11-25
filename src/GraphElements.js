@@ -20,7 +20,6 @@ const getNodesHoverData = (nds, eds) => {
             const conn = edge.id.split("-");
             if (conn[1] === nd.id) {
                 var ndLabel = getNodeLabelById(nds, conn[0]);
-                console.log("LABEL ID:" + ndLabel)
                 if (edge.data.weight >= 0) {posWeights[ndLabel] = edge.data.weight; }
                 if (edge.data.weight < 0) {negWeights[ndLabel] = edge.data.weight; }
             }
