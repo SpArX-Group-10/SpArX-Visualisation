@@ -10,7 +10,34 @@ import React from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { CircularProgress, Dialog, Menu, MenuItem, Stack, Typography } from "@mui/material";
 
+const getNodesToShow = (nds, curNode, k, top) => {
+    let res = []
+    const aux = (nds, curNode, k, top) => nds.map((node) => {
+        if (k===0) {
+            return;
+        }
+        const suppLen = curNode.supportingNodes.length;
+        const attLen = curNode.attackingNodes.length;
+        for (var i=0; i<Math.min(top, attLen); i++) {
+            if (node.data.label === curNode.attackingNodes[i]) {
+                res.push(node.data.label)
+                aux(nds, node, k-1, top)
+                }
+        }
+
+        for (var i=0; i<Math.min(top, suppLen); i++) {
+            if (node.data.label === curNode.supportingNodes[suppLen-1-i]) {
+                res.push(node.data.label)
+                aux(nds, node, k-1, top)
+                }
+        }
+    })
+    aux(nds, curNode, k, top);
+    return res;
+}
+
 export default function Flow() {
+    const [layers, setLayers] = useState(0)
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
     const [graphJson, setGraphJson] = useState(null);
@@ -25,9 +52,10 @@ export default function Flow() {
 
     useEffect(() => {
         if (!location.state) return;
-        const [nodes, edges] = jsonToGraph(location.state.graphJSON);
+        const [nodes, edges, layers] = jsonToGraph(location.state.graphJSON);
         setNodes(nodes);
         setEdges(edges);
+        setLayers(layers)
     }, [location, location.state]);
 
     const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
@@ -35,34 +63,18 @@ export default function Flow() {
 
     const renderPreviousLayer = (_, curNode) => {
         if (showTop) {
+            const nodesToShow = getNodesToShow(nodes, curNode, k, top)
             // Show top attackers/supporters from previous layer
-            setNodes((nds) =>
-                nds.map((node) => {
-                    const suppLen = curNode.supportingNodes.length;
-                    const attLen = curNode.attackingNodes.length;
-                    for (var i=0; i<Math.min(top, attLen); i++) {
-                        if (node.data.label === curNode.attackingNodes[i]) {
-                                node.hidden = false;
-                            }
+            setNodes((nds) => nds.map((node) => {
+                nodesToShow.forEach((nodeToShow) => {
+                    if (nodeToShow === node.data.label){
+                        node.hidden=false;
                     }
-
-                    for (var i=0; i<Math.min(top, suppLen); i++) {
-                        if (node.data.label === curNode.supportingNodes[suppLen-1-i]) {
-                                node.hidden = false;
-                            }
-                    }
-                    return node;
                 })
+                return node;
+            })
+
             );
-
-            setEdges((eds) =>
-                eds.map((edge) => {
-                    if (edge.target === curNode.id && edge.data.weight !== 0) {
-                        edge.hidden = false;
-                    }
-                    return edge;
-                })
-        );
 
         } else {
             // Show k previous layers
@@ -74,16 +86,17 @@ export default function Flow() {
                     return node;         
                 })
             );
+        }   
+ 
+        setEdges((eds) =>
+            eds.map((edge) => {
+                if (edge.layer >= curNode.layer - k && edge.data.weight !== 0) {
+                    edge.hidden = false;
+                }
+                return edge;
+            })
+        );
 
-            setEdges((eds) =>
-                eds.map((edge) => {
-                    if (edge.layer >= curNode.layer - k && edge.data.weight !== 0) {
-                        edge.hidden = false;
-                    }
-                    return edge;
-                })
-            );
-            }
     };
 
     const showEdgeLabel = (_, curEdge) => {
@@ -186,9 +199,7 @@ export default function Flow() {
                                     onChange={(event) => setK(event.target.value)}
                                     style={{ writingMode: "horizontal-tb" }}
                                 >
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
+                                    {(new Array(layers)).fill(undefined).map((_, k) =>k + 1).map(i=><option value={i}>{i}</option>)}
                                 </select>
                             </label>
                         </div>

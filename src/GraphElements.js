@@ -128,7 +128,7 @@ export const jsonToGraph = (myData) => {
         return nd;
     });
 
-    return [nodes, normalizedEdges];
+    return [nodes, normalizedEdges, numLayers];
 };
 
 // export const edges = processedEdges
