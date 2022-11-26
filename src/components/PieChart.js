@@ -6,8 +6,8 @@ export const PieChartComponent = ({supportingWeights, attackingWeights}) => {
   const suppLabels = Object.keys(supportingWeights);
   const attLabels = Object.keys(attackingWeights);
   const allLabels = suppLabels.concat(attLabels);
-  const suppColor = "#FF0000";
-  const attColor = "#00CC00";
+  const suppColor = "#00CC00";
+  const attColor = "#FF0000";
   var data = Object.values(supportingWeights).concat(Object.values(attackingWeights));
 
   var colors = Array(suppLabels.length).fill(suppColor).concat(Array(attLabels.length).fill(attColor));
