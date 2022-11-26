@@ -1,31 +1,25 @@
 import { Pie } from "react-chartjs-2";
-import { Chart, ChartOptions} from "chart.js";
 import React from "react";
 
 
-export const PieChartComponent = (supportingWeights, attackingWeights) => {
-  // var labels = Object.keys(supportingWeights);
-  // var data = Object.values(supportingWeights);
+export const PieChartComponent = ({supportingWeights, attackingWeights}) => {
+  const suppLabels = Object.keys(supportingWeights);
+  const attLabels = Object.keys(attackingWeights);
+  const allLabels = suppLabels.concat(attLabels);
+  const suppColor = "#FF0000";
+  const attColor = "#00CC00";
+  var data = Object.values(supportingWeights).concat(Object.values(attackingWeights));
 
-  // var colors = Array(labels.length).fill("#00FF00");
-
-  // var datasets = [
-  //   {
-  //     data: data,
-  //     backgroundColor: colors,
-  //   }
-  // ]
-
-  // TODO: Fix labels and datasets for pie chart
-
-  var labels = ["2011", "2012", "2014", "2016", "2018"]
+  var colors = Array(suppLabels.length).fill(suppColor).concat(Array(attLabels.length).fill(attColor));
 
   var datasets = [
     {
-      data: [2000, 4000, 2300, 2222, 3333],
-      backgroundColor: ["#000000", "#58508d", "#bc5090", "#ff6361", "#ffa600"]
+      data: data,
+      backgroundColor: colors
     }
   ]
+
+  console.log(datasets);
 
   return (
     <div>
@@ -41,7 +35,7 @@ export const PieChartComponent = (supportingWeights, attackingWeights) => {
           }}
 
           data={{
-            labels: labels,
+            labels: allLabels,
             datasets: datasets
           }}
         />
