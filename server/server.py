@@ -3,7 +3,7 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import os
 
-from .deserialiser import sparx_request_deserialiser, run_end_to_end
+from deserialiser import sparx_request_deserialiser, run_end_to_end
 
 BUILD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../build")
 

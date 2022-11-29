@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
 import Papa from "papaparse";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -13,13 +6,7 @@ import Dataset from "../classes/Dataset";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import NextButton from "./NextButton";
 
-function FeatureSelection({
-  usableHeaders,
-  setSelectedFeatures,
-  selectedFeatures,
-}) {
-  useEffect(() => {}, []);
-
+function FeatureSelection({ usableHeaders, setSelectedFeatures, selectedFeatures }) {
   const handleCheckboxesChange = (i) => {
     let newFeatures = selectedFeatures.slice();
     newFeatures[i] = !newFeatures[i];
@@ -33,7 +20,7 @@ function FeatureSelection({
           <Checkbox
             checked={selectedFeatures[i]}
             id={header}
-            onChange={(event) => handleCheckboxesChange(i)}
+            onChange={(_event) => handleCheckboxesChange(i)}
             sx={{
               color: "#1565C0",
               "&.Mui-checked": {
@@ -111,11 +98,7 @@ function DatasetSelection({ selectedDatasetCallback }) {
         <Stack style={{ height: "100%", position: "relative" }}>
           <Stack direction={"row"} style={{ marginTop: 15, marginRight: 15 }}>
             {/* File Uploader */}
-            <Button
-              variant="contained"
-              component="label"
-              style={{ backgroundColor: "#1565C0" }}
-            >
+            <Button variant="contained" component="label" style={{ backgroundColor: "#1565C0" }}>
               <UploadFileIcon />
               Upload Dataset
               <input
@@ -140,9 +123,7 @@ function DatasetSelection({ selectedDatasetCallback }) {
               <Typography>{fileName}</Typography>
             </Box>
           </Stack>
-          <Typography style={{ marginTop: 35 }}>
-            Select desired features
-          </Typography>
+          <Typography style={{ marginTop: 35 }}>Select desired features</Typography>
           {headers.length !== 0 && (
             <FeatureSelection
               usableHeaders={headers.slice(0, -1)}

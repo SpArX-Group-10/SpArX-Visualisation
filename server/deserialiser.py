@@ -3,12 +3,12 @@ import pandas as pd
 from keras import Sequential
 from keras.layers import Dense, Input
 
-from .sparx import (
+from sparx import (
     KMeansClusterer,
     AgglomerativeClusterer,
     LocalMerger,
     GlobalMerger,
-    SimpleVisualizer,
+    JSONVisualizer,
     Framework,
     endtoend,
 )
@@ -80,7 +80,7 @@ def run_end_to_end(configs):
     framework = Framework.KERAS
     clusterer = sparx_config["clusterer"]
     merger = sparx_config["merger"]
-    visualiser = SimpleVisualizer
+    visualiser = JSONVisualizer
     datapoint = sparx_config["datapoint"]
     shrink_factor = sparx_config["shrinkage"]
     return endtoend(xdata, model, framework, clusterer, merger, visualiser, datapoint, shrink_factor)

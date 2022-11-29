@@ -1,8 +1,7 @@
 import { Pie } from "react-chartjs-2";
 import React from "react";
 
-
-export const PieChartComponent = ({supportingWeights, attackingWeights}) => {
+export const PieChartComponent = ({ supportingWeights, attackingWeights }) => {
   const suppLabels = Object.keys(supportingWeights);
   const attLabels = Object.keys(attackingWeights);
   const allLabels = suppLabels.concat(attLabels);
@@ -15,30 +14,27 @@ export const PieChartComponent = ({supportingWeights, attackingWeights}) => {
   var datasets = [
     {
       data: data,
-      backgroundColor: colors
-    }
-  ]
-
-  console.log(datasets);
+      backgroundColor: colors,
+    },
+  ];
 
   return (
     <div>
-        <Pie
-          options={{
-            width: "400",
-            height: "400",
-            legend: {
-              labels: {
-                fontColor: "white",
-              }
+      <Pie
+        options={{
+          width: "400",
+          height: "400",
+          legend: {
+            labels: {
+              fontColor: "white",
             },
-          }}
-
-          data={{
-            labels: allLabels,
-            datasets: datasets
-          }}
-        />
+          },
+        }}
+        data={{
+          labels: allLabels,
+          datasets: datasets,
+        }}
+      />
     </div>
   );
-}
+};
