@@ -4,6 +4,7 @@ import flask_cors
 import pymongo
 from bson.objectid import ObjectId
 import os
+import certifi
 
 # Configuration
 PORT = os.environ.get("SERVER_PORT", 5001)
@@ -12,7 +13,7 @@ MONGO_DB = os.environ.get("MONGO_DB")
 MONGO_COLLECTION = os.environ.get("MONGO_COLLECTION")
 
 # Create a mongo client
-client = pymongo.MongoClient(MONGO_URL)
+client = pymongo.MongoClient(MONGO_URL, tlsCAFile=certifi.where())
 db = client[MONGO_DB]
 collection = db[MONGO_COLLECTION]
 
