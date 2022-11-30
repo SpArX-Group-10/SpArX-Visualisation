@@ -6,7 +6,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Flow />} />
+        <Route exact path="/:id" element={<Flow />} />
       </Routes>
     </BrowserRouter>
   );

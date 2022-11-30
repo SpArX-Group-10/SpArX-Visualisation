@@ -1,6 +1,6 @@
 import ReactFlow, { Controls, Background } from "reactflow";
 import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "reactflow/dist/style.css";
 import { jsonToGraph } from "./GraphElements";
 import "./GraphElementsStyle.css";
@@ -48,15 +48,19 @@ export default function Flow() {
     const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
 
     const settingsOpen = Boolean(settingsAnchorEl);
-    const location = useLocation();
+    let { id } = useParams();
 
     useEffect(() => {
-        if (!location.state) return;
-        const [nodes, edges, layers] = jsonToGraph(location.state.graphJSON);
-        setNodes(nodes);
-        setEdges(edges);
-        setLayers(layers)
-    }, [location, location.state]);
+        if (!id) return;
+        fetch(`http://127.0.0.1:5001/api/get_vis/${id}`)
+            .then((res) => res.json())
+            .then((jsonData) => {
+                const [nodes, edges, layers] = jsonToGraph(jsonData);
+                setNodes(nodes);
+                setEdges(edges);
+                setLayers(layers)
+            });
+    }, [id]);
 
     const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
     const edgeTypes = useMemo(() => ({ defaultEdge: GraphEdge }), []);

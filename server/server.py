@@ -2,12 +2,14 @@ import flask
 from flask import request
 import flask_cors
 import pymongo
+from bson.objectid import ObjectId
+import os
 
 # Configuration
-PORT = 5001
-MONGO_URL = "mongodb://localhost:27017/"
-MONGO_DB = "test"
-MONGO_COLLECTION = "test"
+PORT = os.environ.get("SERVER_PORT", 5001)
+MONGO_URL = os.environ.get("MONGO_URL")
+MONGO_DB = os.environ.get("MONGO_DB")
+MONGO_COLLECTION = os.environ.get("MONGO_COLLECTION")
 
 # Create a mongo client
 client = pymongo.MongoClient(MONGO_URL)
@@ -26,14 +28,14 @@ def save_vis():
     # Get the data from the request
 
     data = request.get_json()
-    result = collection.insert_one(data)
+    result = collection.insert_one({"data": data})
+    return str(result.inserted_id)
 
-    return result.inserted_id
 
-
-@app.route("/api/get_vis", methods=["GET"])
-def get_vis():
-    return "hello world"
+@app.route("/api/get_vis/<uid>", methods=["GET"])
+def get_vis(uid):
+    data = collection.find_one({"_id": ObjectId(uid)})
+    return data["data"]
 
 
 if __name__ == "__main__":
