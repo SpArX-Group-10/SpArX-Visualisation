@@ -11,7 +11,7 @@ export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attack
 
     return (
         <div>
-            <Typography variant="h6">
+            <Typography variant="subtitle1">
             Node label: {argument}
             <br />
             Directly supported by: {supporting_nodes}
