@@ -8,7 +8,8 @@ import GraphEdge from "./Edge";
 import GraphNode from "./Node";
 import React from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { CircularProgress, Dialog, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { CircularProgress, Dialog, Menu, MenuItem, Stack, Typography, IconButton, Popover } from "@mui/material";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 const ISDEV = process.env.NODE_ENV === "development";
 
@@ -41,7 +42,8 @@ const getNodesToShow = (nds, curNode, k, top) => {
 }
 
 export default function Flow() {
-    const [layers, setLayers] = useState(0)
+    const [maxSupAtt, setMaxSupAtt] = useState(0);
+    const [layers, setLayers] = useState(0);
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
     const [graphJson, setGraphJson] = useState(null);
@@ -50,6 +52,7 @@ export default function Flow() {
     const [showTop, setShowTop] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
+    const [popoverAnchor, setPopoverAnchor] = useState(null);
 
     const settingsOpen = Boolean(settingsAnchorEl);
     let { id } = useParams();
@@ -59,43 +62,30 @@ export default function Flow() {
         fetch(`${ENDPOINT}${id}`)
             .then((res) => res.json())
             .then((jsonData) => {
-                const [nodes, edges, layers] = jsonToGraph(jsonData);
+                const [nodes, edges, layers, maxSupAtt] = jsonToGraph(jsonData);
                 setNodes(nodes);
                 setEdges(edges);
-                setLayers(layers)
+                setLayers(layers);
+                setMaxSupAtt(maxSupAtt);
             });
     }, [id]);
 
     const nodeTypes = useMemo(() => ({ defaultNode: GraphNode }), []);
     const edgeTypes = useMemo(() => ({ defaultEdge: GraphEdge }), []);
 
-    const renderPreviousLayer = (_, curNode) => {
-        if (showTop) {
-            const nodesToShow = getNodesToShow(nodes, curNode, k, top)
-            // Show top attackers/supporters from previous layer
-            setNodes((nds) => nds.map((node) => {
-                nodesToShow.forEach((nodeToShow) => {
-                    if (nodeToShow === node.data.label){
-                        node.hidden=false;
-                    }
-                })
-                return node;
+    let renderPreviousLayer = (_, curNode) => {
+        const nodesToShow = getNodesToShow(nodes, curNode, k, top)
+        // Show top attackers/supporters from previous layer
+        setNodes((nds) => nds.map((node) => {
+            nodesToShow.forEach((nodeToShow) => {
+                if (nodeToShow === node.data.label){
+                    node.hidden=false;
+                }
             })
+            return node;
+        })
 
-            );
-
-        } else {
-            // Show k previous layers
-            setNodes((nds) =>
-                nds.map((node) => {
-                    if (node.layer >= curNode.layer - k) {
-                        node.hidden = false;
-                    }
-                    return node;         
-                })
-            );
-        }   
- 
+        );
         setEdges((eds) =>
             eds.map((edge) => {
                 if (edge.layer >= curNode.layer - k && edge.data.weight !== 0) {
@@ -104,7 +94,6 @@ export default function Flow() {
                 return edge;
             })
         );
-
     };
 
     const showEdgeLabel = (_, curEdge) => {
@@ -181,25 +170,8 @@ export default function Flow() {
                     }}
                 >
                     <MenuItem>
-                        <div className="button-wrapper-att-supp">
-                        Do you want to show top attackers/supporters?__
-                            <label htmlFor="show_top_att_supp_showed">
-                                <select
-                                    id="renderShowTopAttSupp"
-                                    value={showTop}
-                                    onChange={(event) => setShowTop(event.target.value)}
-                                    style={{ writingMode: "horizontal-tb" }}
-                                >
-                                    <option value={false}>No</option>
-                                    <option value={true}>Yes</option>
-                                </select>
-                            </label>
-                        </div>
-                    </MenuItem>
-                    <div style={{ height: "10px" }}></div>
-                    <MenuItem>
                         <div className="button-wrapper-layer">
-                        How many layers do you want to render?__
+                        How many layers do you want to render? {" "}
                             <label htmlFor="num_layers_rendered">
                                 <select
                                     id="renderLayersCount"
@@ -215,7 +187,7 @@ export default function Flow() {
                     <div style={{ height: "10px" }}></div>
                     <MenuItem>
                         <div className="button-wrapper-att-supp">
-                        How many of the top attackers/supporters do you want to show?__
+                        How many of the top attackers/supporters do you want to show? {" "}
                             <label htmlFor="top_att_supp_showed">
                                 <select
                                     id="renderTopAttSupp"
@@ -223,11 +195,9 @@ export default function Flow() {
                                     onChange={(event) => setTop(event.target.value)}
                                     style={{ writingMode: "horizontal-tb" }}
                                 >
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
-                                    <option value={4}>4</option>
-                                    <option value={5}>5</option>
+                                    <option value={maxSupAtt}>All</option>
+                                    {(new Array(maxSupAtt)).fill(undefined).map((_, k) =>k + 1).map(i=><option value={i}>{i}</option>)}
+                                    
                                 </select>
                             </label>
                         </div>

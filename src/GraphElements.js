@@ -118,6 +118,8 @@ export const jsonToGraph = (myData) => {
 
     var nodesHoverData = getNodesHoverData(processedNodes, processedEdges);
 
+    var maxSupAtt = 0;
+
     const nodes = processedNodes.map((nd) => {
         nd.data.argument = nodesHoverData[nd.data.label].argument;
         nd.data.incomingNodes = nodesHoverData[nd.data.label].incomingNodes;
@@ -125,10 +127,13 @@ export const jsonToGraph = (myData) => {
         nd.data.attackingNodes = nodesHoverData[nd.data.label].attackingNodes;
         nd.data.supportingWeights = nodesHoverData[nd.data.label].supportingWeights;
         nd.data.attackingWeights = nodesHoverData[nd.data.label].attackingWeights;
+
+        maxSupAtt = Math.max(maxSupAtt, nd.data.supportingNodes.length)
+        maxSupAtt = Math.max(maxSupAtt, nd.data.attackingNodes.length)
         return nd;
     });
 
-    return [nodes, normalizedEdges, numLayers];
+    return [nodes, normalizedEdges, numLayers, maxSupAtt];
 };
 
 // export const edges = processedEdges
