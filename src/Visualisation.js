@@ -165,7 +165,7 @@ export default function Flow() {
                     PaperProps={{
                         style: {
                             width: 560,
-                            height: 150,
+                            height: 100,
                         },
                     }}
                 >
@@ -179,6 +179,7 @@ export default function Flow() {
                                     onChange={(event) => setK(event.target.value)}
                                     style={{ writingMode: "horizontal-tb" }}
                                 >
+                                    <option value={layers}>All</option>
                                     {(new Array(layers)).fill(undefined).map((_, k) =>k + 1).map(i=><option value={i}>{i}</option>)}
                                 </select>
                             </label>
@@ -197,12 +198,41 @@ export default function Flow() {
                                 >
                                     <option value={maxSupAtt}>All</option>
                                     {(new Array(maxSupAtt)).fill(undefined).map((_, k) =>k + 1).map(i=><option value={i}>{i}</option>)}
-                                    
                                 </select>
                             </label>
                         </div>
                     </MenuItem>
                 </Menu>
+
+
+                <IconButton 
+                    onClick={() => setPopoverAnchor(true)}
+                    style={{ zIndex: 100, position: "absolute", top: "0px", right: "20px" }}
+                >
+                    <HelpOutlineIcon />
+                </IconButton>
+                <Popover
+                    id="help-popover"
+                    open={Boolean(popoverAnchor)}
+                    anchorEl={popoverAnchor}
+                    onClose={() => setPopoverAnchor(false)}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    anchorPosition = {{left: "20px", top: "20px"}}
+                >
+                    <Typography sx={{ p: 2 }}>
+                                            INSTRUCTIONS:<br></br><br></br>
+                        - Render new layers by clicking on neurons.<br></br>
+                        - Use the gear icon in the top left of the screen to select <br></br>
+                        the number of layers and neurons to render per click. <br></br>
+                        - See neuron and edge information by hovering over individual <br></br>
+                        elements.<br></br>
+                        - Click on "SHOW CHART" inside the neuron information card to <br></br>
+                        visualise the contributions of supporters/attackers as a pie chart.
+                        </Typography>
+                </Popover>
             </ReactFlow>
         </div>
     );

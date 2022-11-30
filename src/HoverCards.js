@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { PieChartComponent } from "./components/PieChart"
 
@@ -11,12 +11,14 @@ export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attack
 
     return (
         <div>
+            <Typography variant="h6">
             Node label: {argument}
             <br />
             Directly supported by: {supporting_nodes}
             <br />
             Directly attacked by: {attacking_nodes}
             <br />
+            </Typography>
             <Button 
                 variant="contained" size="small" 
                 style={{backgroundColor: "#1565C0", margin: "2px"}}
