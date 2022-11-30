@@ -10,6 +10,10 @@ import React from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { CircularProgress, Dialog, Menu, MenuItem, Stack, Typography } from "@mui/material";
 
+const ISDEV = process.env.NODE_ENV === "development";
+
+const ENDPOINT = ISDEV ? "http://127.0.0.1:5001/api/get_vis/" : "https://sparx-vis.herokuapp.com/api/get_vis/";
+
 const getNodesToShow = (nds, curNode, k, top) => {
     let res = []
     const aux = (nds, curNode, k, top) => nds.map((node) => {
@@ -52,7 +56,7 @@ export default function Flow() {
 
     useEffect(() => {
         if (!id) return;
-        fetch(`http://127.0.0.1:5001/api/get_vis/${id}`)
+        fetch(`${ENDPOINT}${id}`)
             .then((res) => res.json())
             .then((jsonData) => {
                 const [nodes, edges, layers] = jsonToGraph(jsonData);
