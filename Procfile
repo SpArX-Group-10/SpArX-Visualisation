@@ -1,0 +1,1 @@
+web: python server/server.py $PORT $MONGO_URI $MONGO_DB $MONGO_COLLECTION

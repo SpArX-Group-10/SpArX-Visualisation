@@ -7,13 +7,10 @@ import os
 import certifi
 
 # Configuration
-PORT = os.environ.get("SERVER_PORT", 5001)
-MONGO_URL = os.environ.get("MONGO_URL")
-MONGO_DB = os.environ.get("MONGO_DB")
-MONGO_COLLECTION = os.environ.get("MONGO_COLLECTION")
+PORT, MONGO_URI, MONGO_DB, MONGO_COLLECTION = os.argv[1:]
 
 # Create a mongo client
-client = pymongo.MongoClient(MONGO_URL, tlsCAFile=certifi.where())
+client = pymongo.MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 db = client[MONGO_DB]
 collection = db[MONGO_COLLECTION]
 
