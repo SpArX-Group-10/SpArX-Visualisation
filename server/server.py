@@ -3,11 +3,11 @@ from flask import request
 import flask_cors
 import pymongo
 from bson.objectid import ObjectId
-import os
+import sys
 import certifi
 
 # Configuration
-PORT, MONGO_URI, MONGO_DB, MONGO_COLLECTION = os.argv[1:]
+PORT, MONGO_URI, MONGO_DB, MONGO_COLLECTION = sys.argv[1:]
 
 # Create a mongo client
 client = pymongo.MongoClient(MONGO_URI, tlsCAFile=certifi.where())
