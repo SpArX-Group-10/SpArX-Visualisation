@@ -1,1 +1,1 @@
-web: python server/server.py $PORT $MONGO_URI $MONGO_DB $MONGO_COLLECTION
+web: gunicorn server/server:app $PORT $MONGO_URI $MONGO_DB $MONGO_COLLECTION

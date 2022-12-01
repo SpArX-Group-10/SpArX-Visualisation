@@ -1,10 +1,11 @@
 import flask
-from flask import request
+from flask import request, send_from_directory
 import flask_cors
 import pymongo
 from bson.objectid import ObjectId
 import sys
 import certifi
+import os
 
 # Configuration
 PORT, MONGO_URI, MONGO_DB, MONGO_COLLECTION = sys.argv[1:]
@@ -14,7 +15,9 @@ client = pymongo.MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 db = client[MONGO_DB]
 collection = db[MONGO_COLLECTION]
 
-app = flask.Flask(__name__)
+BUILD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../build")
+
+app = flask.Flask(__name__, static_folder=BUILD_FOLDER)
 
 # Enable CORS
 flask_cors.CORS(app)
@@ -34,6 +37,15 @@ def save_vis():
 def get_vis(uid):
     data = collection.find_one({"_id": ObjectId(uid)})
     return data["data"]
+
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve(path):
+    if path != "" and os.path.exists(os.path.join(BUILD_FOLDER, path)):
+        return send_from_directory(BUILD_FOLDER, path)
+    else:
+        return send_from_directory(BUILD_FOLDER, "index.html")
 
 
 if __name__ == "__main__":
