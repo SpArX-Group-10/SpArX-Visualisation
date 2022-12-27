@@ -14,6 +14,7 @@ const getNodeLabelById = (nds, ndId) => {
 const getNodesHoverData = (nds, eds) => {
     var hoverStateCards = {};
     nds.forEach((nd) => {
+        var prevHiddenNodes = [];
         var posWeights = {};
         var negWeights = {};
         eds.forEach((edge) => {
@@ -126,6 +127,8 @@ export const jsonToGraph = (myData) => {
         nd.data.attackingNodes = nodesHoverData[nd.data.label].attackingNodes;
         nd.data.supportingWeights = nodesHoverData[nd.data.label].supportingWeights;
         nd.data.attackingWeights = nodesHoverData[nd.data.label].attackingWeights;
+        nd.data.supportingVisibleWeights = {};
+        nd.data.attackingVisibleWeights = {};
 
         maxSupAtt = Math.max(maxSupAtt, nd.data.supportingNodes.length)
         maxSupAtt = Math.max(maxSupAtt, nd.data.attackingNodes.length)
