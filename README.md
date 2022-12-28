@@ -26,7 +26,7 @@ Local-host:
 4. In a separate terminal, install yarn dependencies and start:
    
    ```bash
-   yarn
+   yarn install
    yarn start
    ```
     
