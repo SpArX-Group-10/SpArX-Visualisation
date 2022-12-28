@@ -8,7 +8,7 @@ Local-host:
 1.  Clone repo from: [https://github.com/SpArX-Group-10/SpArX-Visualisation](https://github.com/SpArX-Group-10/SpArX-Visualisation)
 
     ```bash
-    git clone --recurse-submodules https://github.com/SpArX-Group-10/SpArX-Visualisation
+    git clone https://github.com/SpArX-Group-10/SpArX-Visualisation
     ```
 
 2.  Install requirements:
@@ -17,17 +17,18 @@ Local-host:
     pip install -r server/requirements.txt
     ```
     
-3.  Install the SpArX pip package:
-    
-    ```bash
-    pip install -e server/sparx
-    ```
-    
-4.  Start the server:
+3.  Start the server:
     
     ```bash
     python server/server.py
     ```
+
+4. In a separate terminal, install yarn dependencies and start:
+   
+   ```bash
+   yarn
+   yarn start
+   ```
     
 
 GUI: Model setup:
