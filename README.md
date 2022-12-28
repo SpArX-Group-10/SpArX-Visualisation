@@ -6,7 +6,11 @@ Local-host:
 ===========
 
 1.  Clone repo from: [https://github.com/SpArX-Group-10/SpArX-Visualisation](https://github.com/SpArX-Group-10/SpArX-Visualisation)
-    
+
+    ```bash
+    git clone --recurse-submodules https://github.com/SpArX-Group-10/SpArX-Visualisation
+    ```
+
 2.  Install requirements:
     
     ```bash
@@ -21,7 +25,7 @@ Local-host:
     
 4.  Start the server:
     
-    ```java
+    ```bash
     python server/server.py
     ```
     
