@@ -80,6 +80,11 @@ export default function Flow() {
             nodesToShow.forEach((nodeToShow) => {
                 if (nodeToShow === node.data.label){
                     node.hidden=false;
+                    if (node.data.label in curNode.data.supportingWeights) {
+                        curNode.data.supportingVisibleWeights[node.data.label] = curNode.data.supportingWeights[node.data.label];
+                    } else {
+                        curNode.data.attackingVisibleWeights[node.data.label] = curNode.data.attackingWeights[node.data.label];
+                    }
                 }
             })
             return node;

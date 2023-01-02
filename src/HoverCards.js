@@ -2,10 +2,22 @@ import { Button, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { PieChartComponent } from "./components/PieChart"
 
-export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attackingNodes, supportingWeights, attackingWeights, topN }) => {
-    // var incoming = "[" + incomingNodes.map((nd) => nd.data.label).join(",") + "]";
+export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attackingNodes, supportingWeights, attackingWeights, supportingVisibleWeights, attackingVisibleWeights, topN }) => {
     var supporting_nodes = "[" + supportingNodes.join(",") + "]";
     var attacking_nodes = "[" + attackingNodes.join(",") + "]";
+    var hiddenWeight = 0;
+    Object.entries(supportingWeights).forEach(([label, weight]) => {
+        if (!(label in supportingVisibleWeights)) {
+            hiddenWeight += weight;
+        }
+    });
+
+    Object.entries(attackingWeights).forEach(([label, weight]) => {
+        if (!(label in attackingVisibleWeights)) {
+            hiddenWeight += weight;
+        }
+    });
+
 
     const [showPieChart, setShowPieChart] = React.useState(false);
 
@@ -26,7 +38,7 @@ export const NodeHoverCard = ({ argument, incomingNodes, supportingNodes, attack
             >
                 Show Chart
             </Button>
-            {showPieChart && <PieChartComponent supportingWeights={supportingWeights} attackingWeights={attackingWeights} />}
+            {showPieChart && <PieChartComponent supportingWeights={supportingVisibleWeights} attackingWeights={attackingVisibleWeights} hiddenWeight={hiddenWeight}/>}
         </div>
         
     );
