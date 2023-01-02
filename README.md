@@ -19,6 +19,11 @@ Local-host:
 3.  Start the server:
     
     ```bash
+    export PORT=5001
+    export NODE_ENV="development"
+    export MONGO_URI="${your uri here}"
+    export MONGO_DB="${your db here}"
+    export MONGO_COLLECTION="${your collection here}"
     python server/server.py
     ```
 
