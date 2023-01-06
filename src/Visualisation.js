@@ -82,7 +82,8 @@ export default function Flow() {
                     node.hidden=false;
                     if (node.data.label in curNode.data.supportingWeights) {
                         curNode.data.supportingVisibleWeights[node.data.label] = curNode.data.supportingWeights[node.data.label];
-                    } else {
+                    }
+                    if (node.data.label in curNode.data.attackingWeights) {
                         curNode.data.attackingVisibleWeights[node.data.label] = curNode.data.attackingWeights[node.data.label];
                     }
                 }
