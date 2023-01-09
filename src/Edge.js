@@ -36,7 +36,7 @@ export default function GraphEdge({
     >
       <path
         id={id}
-        style={{...style, strokeWidth: (isHovered ? 3 : 1) * data.weight * SCALING}}
+        style={{...style, strokeWidth: (isHovered ? 3 : 1) * Math.abs(data.weight) * SCALING}}
         className="react-flow__edge-path"
         d={edgePath}
         markerEnd={markerEnd}
