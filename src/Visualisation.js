@@ -170,7 +170,7 @@ export default function Flow() {
                     }}
                     PaperProps={{
                         style: {
-                            width: 560,
+                            width: 600,
                             height: 100,
                         },
                     }}
