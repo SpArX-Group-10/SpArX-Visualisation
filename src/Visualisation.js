@@ -177,7 +177,7 @@ export default function Flow() {
                 >
                     <MenuItem>
                         <div className="button-wrapper-layer">
-                        How many layers do you want to render? {" "}
+                        How many layers behind do you want to render on click? {" "}
                             <label htmlFor="num_layers_rendered">
                                 <select
                                     id="renderLayersCount"
@@ -194,7 +194,7 @@ export default function Flow() {
                     <div style={{ height: "10px" }}></div>
                     <MenuItem>
                         <div className="button-wrapper-att-supp">
-                        How many of the top attackers/supporters do you want to show? {" "}
+                        How many of the top attackers/supporters do you want to show on click? {" "}
                             <label htmlFor="top_att_supp_showed">
                                 <select
                                     id="renderTopAttSupp"
